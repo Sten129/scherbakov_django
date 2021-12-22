@@ -56,21 +56,42 @@ class Location(models.Model):
     pass
 
 
-class Picture(models.Model):
-   title = models.CharField(max_length=500, verbose_name='Название')
-   type = models.ForeignKey(Type, related_name='type', verbose_name='Тип')
-   genre = models.ForeignKey(Genre, null=False, help_text='Жанр')
-   year = models.DateField(verbose_name='Год')
-   technic = models.ForeignKey(Technic, on_delete=models.CASCADE, related_name='technic')
-   size = models.IntegerField(verbose_name='Размер', null=True)
-   publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, related_name='publishing')
-   provenance = models.ForeignKey(Owner, on_delete=models.CASCADE,null=True, related_name='provenance')
-   event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
-   # exhibition
-   image = models.ImageField()
-   pass
+class Book(models.Model):
+    title = models.CharField(max_length=500, verbose_name='Название')
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False, related_name='location' )
+    year = models.DateField(verbose_name='Дата')
+    pub_house = models.CharField(max_length=500, verbose_name='издательство')
+    isbn = models.CharField(verbose_name='ISBN')
+    pdf = models.FileField
+    description = models.TextField(max_length=1000, verbose_name='описание')
+    image = models.ImageField
+    slug = models.SlugField(null=False, unique=False, help_text='URL')
+
+    pass
 
 class Photo(models.Model):
+    pass
+
+class Owner(models.Model):
+    # нужно унаследовать класс от Persone или правильно спопоставить его с ним
+    # name = models.ForeignKey(Persone, on_delete=models.CASCADE, related_name='persone')
+    slug = models.SlugField(null=False,
+        unique=True,
+        help_text='URL')
+    pass
+
+class Persone(models.Model):
+    name = models.CharField(max_length=200, verbose_name='имя')
+    birth = models.DateField(verbose_name='Дата рождения')
+    death = models.DateField(verbose_name='Дата смерти')
+    description = models.TextField(max_length=1000, verbose_name='Описание')
+    link = models.URLField
+    provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, related_name='persone')
+    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, related_name='publishing')
+    # letter = models.ForeignKey(Letter, on_delete=models.CASCADE, null=True, related_name='letter')
+    # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
+    image = models.ImageField
+    slug = models.SlugField(null=False, unique=False, help_text='URL')
     pass
 
 class Letter(models.Model):
@@ -102,44 +123,24 @@ class Exhibition(models.Model):
     slug = models.SlugField(null=False, unique=False, help_text='URL')
     pass
 
-class Book(models.Model):
-    title = models.CharField(max_length=500, verbose_name='Название')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False, related_name='location' )
-    year = models.DateField(verbose_name='Дата')
-    pub_house = models.CharField(max_length=500, verbose_name='издательство')
-    isbn = models.CharField(verbose_name='ISBN')
-    pdf = models.FileField
-    description = models.TextField(max_length=1000, verbose_name='описание')
-    image = models.ImageField
-    slug = models.SlugField(null=False, unique=False, help_text='URL')
-
-    pass
-
-class Persone(models.Model):
-    name = models.CharField(max_length=200, verbose_name='имя')
-    birth = models.DateField(verbose_name='Дата рождения')
-    death = models.DateField(verbose_name='Дата смерти')
-    description = models.TextField(max_length=1000, verbose_name='Описание')
-    link = models.URLField
-    provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, related_name='persone')
-    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, related_name='publishing')
-    letter = models.ForeignKey(Letter, on_delete=models.CASCADE, null=True, related_name='letter')
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
-    image = models.ImageField
-    slug = models.SlugField(null=False, unique=False, help_text='URL')
-    pass
+class Picture(models.Model):
+   title = models.CharField(max_length=500, verbose_name='Название')
+   type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='type', verbose_name='Тип')
+   genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=False, help_text='Жанр')
+   year = models.DateField(verbose_name='Год')
+   technic = models.ForeignKey(Technic, on_delete=models.CASCADE, related_name='technic')
+   size = models.IntegerField(verbose_name='Размер', null=True)
+   publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, related_name='publishing')
+   provenance = models.ForeignKey(Owner, on_delete=models.CASCADE,null=True, related_name='provenance')
+   # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
+   # exhibition
+   image = models.ImageField()
+   pass
 
 class Description(models.Model):
     pass
 
+
+
 class Event(models.Model):
-    pass
-
-
-
-class Owner(models.Model):
-    name = models.ForeignKey(Persone, on_delete=models.CASCADE, related_name='persone')
-    slug = models.SlugField(null=False,
-        unique=True,
-        help_text='URL')
     pass
