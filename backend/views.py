@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Picture, Type
+from .models import Picture, Type, Event, Exhibition, Letter, Persone, Location, Photo, Document, Description
 
 from django.core.paginator import Paginator
 
@@ -16,6 +16,11 @@ def index(request):
     )
 
 def group_pictures(request, slug):
+    # подставить переменную - критерий группировки
+    # queryset = Book.objects.filter(title__startswith='M') - пример Queryset.
+    # делаем queryset по выставкам, жанрам, годам, технике, людям, музеям, владельцам
+    # queryset = Picture.objects.filter(slug=request.slug)
+    # group = get_object_or_404(queryset, slug=slug)
     group = get_object_or_404(Type, slug=slug)
     picture_list_group = type.pictures.all()
     paginator = Paginator(picture_list_group, 10)

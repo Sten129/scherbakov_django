@@ -82,6 +82,7 @@ class Letter(models.Model):
     persons = models.ForeignKey(Persone, on_delete=models.CASCADE())
     pdf = models.FileField
     image = models.ImageField
+    slug = models.SlugField(null=False, unique=False, help_text='URL')
     pass
 
 class Document(models.Model):
@@ -92,11 +93,13 @@ class Exhibition(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False, related_name='location' )
     date = models.DateField(verbose_name='Дата')
+    pictures = models.ForeignKey(Picture, on_delete=models.CASCADE, null=False, related_name='pictures')
     persons = models.ForeignKey(Persone, on_delete=models.CASCADE, null=True, related_name='persons')
     publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, related_name='publishing')
     docs = models.ForeignKey(Document, on_delete=models.CASCADE, null=True, related_name='docs')
     description = models.TextField(max_length=1000, verbose_name='Описание')
     image = models.ImageField()
+    slug = models.SlugField(null=False, unique=False, help_text='URL')
     pass
 
 class Book(models.Model):
@@ -108,6 +111,7 @@ class Book(models.Model):
     pdf = models.FileField
     description = models.TextField(max_length=1000, verbose_name='описание')
     image = models.ImageField
+    slug = models.SlugField(null=False, unique=False, help_text='URL')
 
     pass
 
@@ -122,6 +126,7 @@ class Persone(models.Model):
     letter = models.ForeignKey(Letter, on_delete=models.CASCADE, null=True, related_name='letter')
     event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
     image = models.ImageField
+    slug = models.SlugField(null=False, unique=False, help_text='URL')
     pass
 
 class Description(models.Model):
