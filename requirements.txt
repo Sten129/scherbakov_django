@@ -17,3 +17,5 @@ pytest-django==4.5.2
 six==1.16.0
 sqlparse==0.4.2
 toml==0.10.2
+
+djangorestframework~=3.13.1
