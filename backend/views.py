@@ -1,8 +1,84 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Picture, Type, Event, Exhibition, Letter, Persone, Location, Photo, Document, Description
+from .models import Picture, Type, Event, Exhibition, Letter, Persone, Location, Photo, Document, Description, Genre, Technic, Book, Owner
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+from rest_framework import filters, mixins, status, viewsets
+from rest_framework.decorators import action, api_view, permission_classes
+from serializers import (
+    TypeSerializer,
+    GenreSerializers,
+    BookSerializer,
+    PictureSerializer,
+    ExhibitionSerializer,
+    TechnicSerializer,
+    DocumentSerializer,
+    PersoneSerializer,
+    PhotoSerializer,
+    LocationSerializer,
+    OwnerSerializer,
+    LetterSerializer
+)
 
 from django.core.paginator import Paginator
+
+
+
+class TypeViewSet(viewsets.ModelViewSet):
+    queryset = Type.objects.all()
+    serializer_class = TypeSerializer
+    pass
+
+class GenreViewSet(viewsets.ModelViewSet):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializers
+    pass
+
+class TechnicViewSet(viewsets.ModelViewSet):
+    queryset = Technic.objects.all()
+    serializer_class = TechnicSerializer
+    pass
+
+class LocationViewSet(viewsets.ModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    pass
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    pass
+
+class OwnerViewSet(viewsets.ModelViewSet):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer
+    pass
+
+class Persone(viewsets.ModelViewSet):
+    queryset = Persone.objects.all()
+    serializer_class = PersoneSerializer
+    pass
+
+class LetterViewSet(viewsets.ModelViewSet):
+    queryset = Letter.objects.all()
+    serializer_class = LetterSerializer
+    pass
+
+
+class DocumentViewSet(viewsets.ModelViewSet):
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer
+    pass
+
+class ExhibitionViewSet(viewsets.ModelViewSet):
+    queryset = Exhibition.objects.all()
+    serializer_class = ExhibitionSerializer
+    pass
+
+class PictureViewSet(viewsets.ModelViewSet):
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
+    pass
 
 def index(request):
     picture_list = Picture.objects.all()

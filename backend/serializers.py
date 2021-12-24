@@ -4,7 +4,7 @@ from .models import Picture, Photo, Letter, Document, Exhibition, Genre, Book, P
 
 class TypeSerializer(serializers.ModelSerializer):
     name = serializers.ReadOnlyField(read_only=True)
-    slug = serializers.SlugRelatedField(read_only=True, slug_field='type')
+    slug = serializers.SlugRelatedField(read_only=True, slug_field='slug',queryset=Type.objects.all())
 
     class Meta:
         fields = '__all__'
@@ -14,7 +14,7 @@ class TypeSerializer(serializers.ModelSerializer):
 
 class GenreSerializers(serializers.ModelSerializer):
     name = serializers.ReadOnlyField(read_only=True)
-    slug = serializers.SlugRelatedField(read_only=True, slug_field='type')
+    slug = serializers.SlugRelatedField(read_only=True, slug_field='slug', queryset=Genre.objects.all())
 
     class Meta:
         fields = '__all__'
@@ -23,8 +23,8 @@ class GenreSerializers(serializers.ModelSerializer):
 
 
 class TechnicSerializer(serializers.ModelSerializer):
-    name = serializers.ReadOnlyField(read_only=True)
-    slug = serializers.SlugRelatedField(read_only=True, slug_field='type')
+    name = serializers.ReadOnlyField(source='technic.id')
+    slug = serializers.SlugRelatedField(read_only=True, slug_field='slug')
 
     class Meta:
         fields = '__all__'
@@ -32,8 +32,8 @@ class TechnicSerializer(serializers.ModelSerializer):
     pass
 
 
-class PictureSerializers(serializers.ModelSerializer):
-    title = serializers.ReadOnlyField
+class PictureSerializer(serializers.ModelSerializer):
+    title = serializers.ReadOnlyField()
     type = serializers.SlugRelatedField
     genre = serializers.SlugRelatedField
     year = serializers.ReadOnlyField
