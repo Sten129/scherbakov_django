@@ -9,7 +9,7 @@ class TypeAdmin(admin.ModelAdmin):
     pass
 
 class PictureAdmin(admin.ModelAdmin):
-    list_display = ('title', 'type', 'genre', 'year', 'publishing', 'provenance', 'exhibition')
+    list_display = ('title', 'type', 'genre', 'year', 'publishing', 'provenance', )
     empty_value_display = '-пусто-'
     search_fields = ('title', 'type', 'genre')
     list_filter = ('title',)
@@ -31,9 +31,9 @@ class GenreAdmin(admin.ModelAdmin):
 
 
 class ExhibitionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'location', 'date', 'pictures', 'persons', 'publishing', 'docs', 'description', 'slug' )
+    list_display = ('title', 'location', 'date',  'persons', 'publishing', 'docs', 'description', 'slug' )
     empty_value_display = '-пусто-'
-    search_fields = ('title', 'location', 'date', 'pictures')
+    search_fields = ('title', 'location', 'date', )
     list_filter = ('date',)
     pass
 

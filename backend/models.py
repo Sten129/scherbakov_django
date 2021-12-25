@@ -58,10 +58,10 @@ class Location(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False, related_name='location' )
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False )
     year = models.DateField(verbose_name='Дата')
     pub_house = models.CharField(max_length=500, verbose_name='издательство')
-    isbn = models.CharField(verbose_name='ISBN')
+    isbn = models.CharField(verbose_name='ISBN', max_length=14)
     pdf = models.FileField
     description = models.TextField(max_length=1000, verbose_name='описание')
     image = models.ImageField
@@ -86,8 +86,8 @@ class Persone(models.Model):
     death = models.DateField(verbose_name='Дата смерти')
     description = models.TextField(max_length=1000, verbose_name='Описание')
     link = models.URLField
-    provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True, related_name='persone')
-    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, related_name='publishing')
+    provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True)
+    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True)
     # letter = models.ForeignKey(Letter, on_delete=models.CASCADE, null=True, related_name='letter')
     # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
     image = models.ImageField
@@ -98,9 +98,9 @@ class Letter(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     from_who = models.CharField(max_length=500, verbose_name='От кого')
     to = models.CharField(max_length=500, verbose_name='Кому')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name='Локация', related_name='location')
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name='Локация')
     date = models.DateField
-    persons = models.ForeignKey(Persone, on_delete=models.CASCADE())
+    persons = models.ForeignKey(Persone, on_delete=models.CASCADE)
     pdf = models.FileField
     image = models.ImageField
     slug = models.SlugField(null=False, unique=False, help_text='URL')
@@ -112,12 +112,12 @@ class Document(models.Model):
 
 class Exhibition(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False, related_name='location' )
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False )
     date = models.DateField(verbose_name='Дата')
-    pictures = models.ForeignKey(Picture, on_delete=models.CASCADE, null=False, related_name='pictures')
-    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, null=True, related_name='persons')
-    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, related_name='publishing')
-    docs = models.ForeignKey(Document, on_delete=models.CASCADE, null=True, related_name='docs')
+    # pictures = models.ForeignKey(Picture, on_delete=models.CASCADE, null=False, related_name='pictures')
+    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, null=True)
+    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True)
+    docs = models.ForeignKey(Document, on_delete=models.CASCADE, null=True)
     description = models.TextField(max_length=1000, verbose_name='Описание')
     image = models.ImageField()
     slug = models.SlugField(null=False, unique=False, help_text='URL')
@@ -128,10 +128,10 @@ class Picture(models.Model):
    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='type', verbose_name='Тип')
    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=False, help_text='Жанр')
    year = models.DateField(verbose_name='Год')
-   technic = models.ForeignKey(Technic, on_delete=models.CASCADE, related_name='technic')
+   technic = models.ForeignKey(Technic, on_delete=models.CASCADE)
    size = models.IntegerField(verbose_name='Размер', null=True)
-   publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, related_name='publishing')
-   provenance = models.ForeignKey(Owner, on_delete=models.CASCADE,null=True, related_name='provenance')
+   publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True)
+   provenance = models.ForeignKey(Owner, on_delete=models.CASCADE,null=True)
    # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
    # exhibition
    image = models.ImageField()
