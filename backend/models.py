@@ -46,6 +46,7 @@ class Technic(models.Model):
 
 class Location(models.Model):
     name = models.CharField('Локация', unique=True, max_length=20)
+    image = models.ImageField(verbose_name='Изображение', upload_to='locations/')
     slug = models.SlugField(max_length=100, unique=True)
 
     class Meta:
@@ -90,6 +91,7 @@ class Persone(models.Model):
 class Owner(models.Model):
     name = models.CharField(max_length=500, verbose_name='Название или имя')
     persone = models.ForeignKey(Persone, null=True, on_delete=models.CASCADE)
+    image = models.ImageField(verbose_name='Изображение', upload_to='owners/')
     slug = models.SlugField(unique=True, help_text='URL')
 
 
