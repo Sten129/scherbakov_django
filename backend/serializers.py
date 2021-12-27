@@ -1,14 +1,27 @@
 from rest_framework import serializers
-from .models import Picture, Photo, Letter, Document, Exhibition, Genre, Book, Persone, Owner, Technic, Type, Location
+from .models import (Picture,
+                     Photo,
+                     Letter,
+                     Document,
+                     Exhibition,
+                     Genre,
+                     Book,
+                     Persone,
+                     Owner,
+                     Technic,
+                     Type,
+                     Location,
+                     Article)
 
 
 class TypeSerializer(serializers.ModelSerializer):
     name = serializers.ReadOnlyField(read_only=True)
-    slug = serializers.SlugRelatedField(read_only=True, slug_field='slug',queryset=Type.objects.all())
+    slug = serializers.SlugRelatedField(read_only=True, slug_field='slug', queryset=Type.objects.all())
 
     class Meta:
         fields = '__all__'
         model = Type
+
     pass
 
 
@@ -19,6 +32,7 @@ class GenreSerializers(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Genre
+
     pass
 
 
@@ -29,6 +43,7 @@ class TechnicSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Technic
+
     pass
 
 
@@ -41,7 +56,13 @@ class PictureSerializer(serializers.ModelSerializer):
     size = serializers.ReadOnlyField
     publishing = serializers.SlugRelatedField
     provenance = serializers.SlugRelatedField
+
     # image = serializers.SlugRelatedField
+
+    class Meta:
+        model = Picture
+        fields = '__all__'
+
     pass
 
 
@@ -60,19 +81,28 @@ class LetterSerializer(serializers.ModelSerializer):
     # pdf
     # image = serializers.ImageField
     slug = serializers.SlugRelatedField
+
+    class Meta:
+        model = Letter
+        fields = '__all__'
+
     pass
 
 
 class DocumentSerializer(serializers.ModelSerializer):
     title = serializers.ReadOnlyField
-    from_who = serializers.ReadOnlyField
-    to = serializers.ReadOnlyField
-    location = serializers.SlugRelatedField
+    type = serializers.ReadOnlyField
     date = serializers.ReadOnlyField
+    location = serializers.SlugRelatedField
     persons = serializers.SlugRelatedField
     # pdf = serializers.FileField
     # image
     slug = serializers.SlugRelatedField
+
+    class Meta:
+        model = Document
+        fiels = "__all__"
+
     pass
 
 
@@ -87,7 +117,13 @@ class ExhibitionSerializer(serializers.ModelSerializer):
     description = serializers.ReadOnlyField
     # image
     slug = serializers.SlugRelatedField
+
+    class Meta:
+        model = Exhibition
+        fields = '__all__'
+
     pass
+
 
 class BookSerializer(serializers.ModelSerializer):
     title = serializers.ReadOnlyField
@@ -99,7 +135,13 @@ class BookSerializer(serializers.ModelSerializer):
     description = serializers.ReadOnlyField
     # image = serializers.ImageField
     slug = serializers.SlugRelatedField
+
+    class Meta:
+        model = Book
+        fields = '__all__'
+
     pass
+
 
 class PersoneSerializer(serializers.ModelSerializer):
     name = serializers.ReadOnlyField
@@ -111,15 +153,48 @@ class PersoneSerializer(serializers.ModelSerializer):
     publishing = serializers.SlugRelatedField
     # image = serializers.ImageField
     slug = serializers.SlugRelatedField
+
+    class Meta:
+        model = Persone
+        fields = '__all__'
+
     pass
+
 
 class LocationSerializer(serializers.ModelSerializer):
     name = serializers.ReadOnlyField
     slug = serializers.SlugRelatedField
 
+    class Meta:
+        model = Location
+        fields = '__all__'
+
     pass
+
 
 class OwnerSerializer(serializers.ModelSerializer):
     # name = serializers.ReadOnlyField - разобраться с првязкой к Persone
     slug = serializers.SlugRelatedField
+
+    class Meta:
+        model = Owner
+        fields = '__all__'
+
+    pass
+
+
+class ArticleSerializer(serializers.ModelSerializer):
+    title = serializers.ReadOnlyField
+    text = serializers.ReadOnlyField
+    author = serializers.SlugRelatedField
+    date = serializers.ReadOnlyField
+    exhibition = serializers.SlugRelatedField
+    picture = serializers.SlugRelatedField
+
+    # slug
+
+    class Meta:
+        model = Article
+        fields = '__all__'
+
     pass

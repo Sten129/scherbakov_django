@@ -52,7 +52,7 @@ class OwnerAdmin(admin.ModelAdmin):
     pass
 
 class PersoneAdmin(admin.ModelAdmin):
-    list_display = ('name', 'birth', 'death', 'description', 'link', 'provenance', 'publishing', 'slug')
+    list_display = ('name', 'birth', 'death', 'description', 'link',  'publishing', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ()
     list_filter = ()
@@ -85,6 +85,10 @@ class PhotoAdmin(admin.ModelAdmin):
     search_fields = ()
     list_filter = ()
     pass
+
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('title', 'text', 'author', 'date', 'exhibition', 'picture', 'slug')
+    em
 
 
 admin.site.register(Type, TypeAdmin)
