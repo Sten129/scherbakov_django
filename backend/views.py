@@ -1,19 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import (Picture,
-                     Type,
-                     Event,
-                     Exhibition,
-                     Letter,
-                     Persone,
-                     Location,
-                     Photo,
-                     Document,
-                     Genre,
-                     Technic,
-                     Book,
-                     Owner,
-                     Article)
+from models import (Picture,
+                    Type,
+                    Event,
+                    Exhibition,
+                    Letter,
+                    Persone,
+                    Location,
+                    Photo,
+                    Document,
+                    Genre,
+                    Technic,
+                    Book,
+                    Owner,
+                    Article)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import filters, mixins, status, viewsets
