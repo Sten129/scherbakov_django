@@ -35,6 +35,7 @@ from serializers import (
 )
 
 from django.core.paginator import Paginator
+from rest_framework.pagination import PageNumberPagination
 from .forms import ContactForm
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
@@ -61,30 +62,35 @@ class TechnicViewSet(viewsets.ModelViewSet):
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+    pagination_class = PageNumberPagination
     pass
 
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    pagination_class = PageNumberPagination
     pass
 
 
 class OwnerViewSet(viewsets.ModelViewSet):
     queryset = Owner.objects.all()
     serializer_class = OwnerSerializer
+    pagination_class = PageNumberPagination
     pass
 
 
 class PersoneViewSet(viewsets.ModelViewSet):
     queryset = Persone.objects.all()
     serializer_class = PersoneSerializer
+    pagination_class = PageNumberPagination
     pass
 
 
 class LetterViewSet(viewsets.ModelViewSet):
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
+    pagination_class = PageNumberPagination
     pass
 
 
