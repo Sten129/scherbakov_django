@@ -11,8 +11,8 @@ class Genre(models.Model):
 
     class Meta:
         ordering = ('-name',)
-        verbose_name = 'Genre'
-        verbose_name_plural = 'Genres'
+        verbose_name = 'Жанр'
+        verbose_name_plural = 'Жанры'
 
     def __str__(self):
         return self.name
@@ -24,8 +24,8 @@ class Type(models.Model):
 
     class Meta:
         ordering = ('-name',)
-        verbose_name = 'Type'
-        verbose_name_plural = 'Type'
+        verbose_name = 'Тип'
+        verbose_name_plural = 'Типы'
 
     def __str__(self):
         return self.name
@@ -37,8 +37,8 @@ class Technic(models.Model):
 
     class Meta:
         ordering = ('-name',)
-        verbose_name = 'Technic'
-        verbose_name_plural = 'Technics'
+        verbose_name = 'Техника'
+        verbose_name_plural = 'Техники'
 
     def __str__(self):
         return self.name
@@ -51,8 +51,8 @@ class Location(models.Model):
 
     class Meta:
         ordering = ('-name',)
-        verbose_name = 'Location'
-        verbose_name_plural = 'Locations'
+        verbose_name = 'Локация'
+        verbose_name_plural = 'Локации'
 
     def __str__(self):
         return self.name
@@ -69,6 +69,14 @@ class Book(models.Model):
     image = models.ImageField(verbose_name='Изображение', upload_to='books/')
     slug = models.SlugField(null=False, unique=False, help_text='URL')
 
+    class Meta:
+        ordering = ('-title',)
+        verbose_name = 'Издание'
+        verbose_name_plural = 'Издания'
+
+    def __str__(self):
+        return self.title
+
 
 class Photo(models.Model):
     pass
@@ -77,59 +85,100 @@ class Photo(models.Model):
 class Persone(models.Model):
     name = models.CharField(max_length=200, verbose_name='имя')
     birth = models.DateField(verbose_name='Дата рождения', default=datetime.date.today)
-    death = models.DateField(verbose_name='Дата смерти', default=datetime.date.today)
+    death = models.DateField(verbose_name='Дата смерти', blank=True, null=True, default=datetime.date.today)
     description = models.TextField(max_length=1000, verbose_name='Описание')
     link = models.URLField
     # provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True)
-    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True)
+    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
     # letter = models.ForeignKey(Letter, on_delete=models.CASCADE, null=True, related_name='letter')
     # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
     image = models.ImageField(verbose_name='Изображение', upload_to='persons/')
     slug = models.SlugField(unique=True, help_text='URL')
 
+    class Meta:
+        ordering = ('-name',)
+        verbose_name = 'Человек'
+        verbose_name_plural = 'Люди'
+
+    def __str__(self):
+        return self.name
+
 
 class Owner(models.Model):
-    name = models.CharField(max_length=500, verbose_name='Название или имя')
-    persone = models.ForeignKey(Persone, blank=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=500, blank=True, null=True, verbose_name='Название или имя')
+    persone = models.ForeignKey(Persone, blank=True, null=True, on_delete=models.CASCADE)
     image = models.ImageField(verbose_name='Изображение', upload_to='owners/')
     slug = models.SlugField(unique=True, help_text='URL')
+
+    class Meta:
+        ordering = ('-name',)
+        verbose_name = 'Владелец'
+        verbose_name_plural = 'Владельцы'
+
+    def __str__(self):
+        return self.name
 
 
 class Letter(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     from_who = models.CharField(max_length=500, verbose_name='От кого')
     to = models.CharField(max_length=500, verbose_name='Кому')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, verbose_name='Локация')
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Локация')
     date = models.DateField(verbose_name='Дата', default=datetime.date.today)
-    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, verbose_name='Люди')
+    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
     pdf = models.FileField(verbose_name='PDF-файл')
     image = models.ImageField(verbose_name='Изображение', upload_to='letters/')
     slug = models.SlugField(unique=True, help_text='URL')
 
+    class Meta:
+        ordering = ('-title',)
+        verbose_name = 'Письмо'
+        verbose_name_plural = 'Письма'
+
+    def __str__(self):
+        return self.title
+
 
 class Document(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
-    type = models.CharField(max_length=100, verbose_name='Тип документа')
+    type = models.CharField(max_length=100, blank=True, null=True, verbose_name='Тип документа')
     date = models.DateField(verbose_name='Дата', default=datetime.date.today)
     # event = models.ForeignKey
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name='Локация')
-    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, verbose_name='Люди')
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True,  verbose_name='Локация')
+    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
     image = models.ImageField(verbose_name='Изображение', upload_to='docs/')
     slug = models.SlugField(unique=True, help_text='URL')
-    pass
+
+    class Meta:
+        ordering = ('-title',)
+        verbose_name = 'Документ'
+        verbose_name_plural = 'Документы'
+
+    def __str__(self):
+        return self.title
 
 
+
+# Желательно добавить связующую модель, типа PictureOnExhibition
 class Exhibition(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False, verbose_name='Локация')
     date = models.DateField(verbose_name='Дата', default=datetime.date.today)
     # pictures = models.ForeignKey(Picture, on_delete=models.CASCADE, null=False, related_name='pictures')
-    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, verbose_name='Люди')
-    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, verbose_name='Издания')
-    docs = models.ForeignKey(Document, on_delete=models.CASCADE, blank=True, verbose_name='Документы')
+    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
+    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Издания')
+    docs = models.ForeignKey(Document, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Документы')
     description = models.TextField(max_length=1000, verbose_name='Описание')
     image = models.ImageField(verbose_name='Изображение', upload_to='exhibitions/')
     slug = models.SlugField(null=False, unique=False, help_text='URL')
+
+    class Meta:
+        ordering = ('-title',)
+        verbose_name = 'Выставка'
+        verbose_name_plural = 'Выставки'
+
+    def __str__(self):
+        return self.title
 
 
 class Picture(models.Model):
@@ -138,12 +187,21 @@ class Picture(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=False, help_text='Жанр')
     year = models.DateField(verbose_name='Год', default=datetime.date.today)
     technic = models.ForeignKey(Technic, on_delete=models.CASCADE, blank=False)
-    size = models.IntegerField(verbose_name='Размер', blank=False)
-    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True)
-    provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, blank=True)
+    size_vertical = models.IntegerField(verbose_name='Размер по вертикали', blank=False)
+    size_horisontal = models.IntegerField(verbose_name='Размер по горизонтали', blank=False)
+    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, null=True)
+    provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, blank=True, null=True)
     # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, verbose_name='Выставки')
+    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки')
     image = models.ImageField(verbose_name='Изображение', upload_to='pictures/')
+
+    class Meta:
+        ordering = ('-title',)
+        verbose_name = 'Работа'
+        verbose_name_plural = 'Работы'
+
+    def __str__(self):
+        return self.title
 
 class Article(models.Model):
    title = models.CharField(max_length=500, verbose_name='Название')
@@ -154,6 +212,14 @@ class Article(models.Model):
    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, blank=True, verbose_name='Работы')
    image = models.ImageField(verbose_name='Изображение', upload_to='articles/')
    slug = models.SlugField(null=False, unique=True, help_text='URL')
+
+   class Meta:
+       ordering = ('-title',)
+       verbose_name = 'Статья'
+       verbose_name_plural = 'Статьи'
+
+   def __str__(self):
+       return self.title
 
 
 class Event(models.Model):
