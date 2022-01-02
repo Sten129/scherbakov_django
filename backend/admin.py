@@ -7,7 +7,7 @@ class TypeAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     # list_filter = ()
-    pass
+
 
 
 class PictureAdmin(admin.ModelAdmin):
@@ -15,7 +15,7 @@ class PictureAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('title', 'type', 'genre')
     list_filter = ('title',)
-    pass
+
 
 
 class LocationAdmin(admin.ModelAdmin):
@@ -23,7 +23,7 @@ class LocationAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
-    pass
+
 
 
 class GenreAdmin(admin.ModelAdmin):
@@ -31,7 +31,7 @@ class GenreAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
-    pass
+
 
 
 class ExhibitionAdmin(admin.ModelAdmin):
@@ -39,7 +39,7 @@ class ExhibitionAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('title', 'location', 'date',)
     list_filter = ('date',)
-    pass
+
 
 
 class TechnicAdmin(admin.ModelAdmin):
@@ -47,7 +47,7 @@ class TechnicAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
-    pass
+
 
 
 class OwnerAdmin(admin.ModelAdmin):
@@ -55,7 +55,7 @@ class OwnerAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
-    pass
+
 
 
 class PersoneAdmin(admin.ModelAdmin):
@@ -63,7 +63,7 @@ class PersoneAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
-    pass
+
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -71,7 +71,7 @@ class BookAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('name', 'year')
     list_filter = ('title', 'year')
-    pass
+
 
 
 class DocumentAdmin(admin.ModelAdmin):
@@ -79,7 +79,7 @@ class DocumentAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('title',)
     list_filter = ('title', 'date')
-    pass
+
 
 
 class LetterAdmin(admin.ModelAdmin):
@@ -87,7 +87,6 @@ class LetterAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('title', 'from_who', 'to', 'date')
     list_filter = ('to',)
-    pass
 
 
 class PhotoAdmin(admin.ModelAdmin):
@@ -103,7 +102,7 @@ class ArticleAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ()
     list_filter = ()
-    pass
+
 
 
 admin.site.register(Type, TypeAdmin)

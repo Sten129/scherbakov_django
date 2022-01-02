@@ -46,13 +46,13 @@ class Technic(models.Model):
 
 class Location(models.Model):
     name = models.CharField('Локация', unique=True, max_length=20)
-    image = models.ImageField(verbose_name='Изображение', upload_to='locations/')
+    image = models.ImageField(verbose_name='Изображение', blank=True, upload_to='locations/')
     slug = models.SlugField(max_length=100, unique=True)
 
     class Meta:
         ordering = ('-name',)
-        verbose_name = 'Technic'
-        verbose_name_plural = 'Technics'
+        verbose_name = 'Location'
+        verbose_name_plural = 'Locations'
 
     def __str__(self):
         return self.name
