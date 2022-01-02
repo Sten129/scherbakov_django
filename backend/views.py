@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from models import (Picture,
+from backend.models import (Picture,
                     Type,
                     Event,
                     Exhibition,
@@ -18,7 +18,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework import filters, mixins, status, viewsets
 from rest_framework.decorators import action, api_view, permission_classes
-from serializers import (
+from .serializers import (
     TypeSerializer,
     GenreSerializers,
     BookSerializer,
