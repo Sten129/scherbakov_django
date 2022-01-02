@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from backend import views
 from rest_framework.routers import DefaultRouter
 from .views import (
@@ -31,6 +31,7 @@ router.register('picture', PictureViewSet, basename='picture')
 router.register('persone', PersoneViewSet, basename='persone')
 
 urlpatterns = [
+    path('', include(router.urls))
     # path("", views.index, name="index"),
     # path("group/<slug:slug>/", views.group_pictures, name="group"),
     # path('<int:picture_id>/', views.picture_view, name='picture'),
