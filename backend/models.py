@@ -164,7 +164,7 @@ class Exhibition(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False, verbose_name='Локация')
     date = models.DateField(verbose_name='Дата', default=datetime.date.today)
-    # pictures = models.ForeignKey(Picture, on_delete=models.CASCADE, null=False, related_name='pictures')
+    # pictures = models.ManyToManyField(Picture, through='')
     persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
     publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Издания')
     docs = models.ForeignKey(Document, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Документы')
@@ -192,7 +192,8 @@ class Picture(models.Model):
     publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, null=True)
     provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, blank=True, null=True)
     # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки')
+    # exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки')
+    exhibition = models.ManyToManyField(Exhibition, through='PictureOnExhibition', verbose_name='Выставки')
     image = models.ImageField(verbose_name='Изображение', upload_to='pictures/')
 
     class Meta:
@@ -202,6 +203,23 @@ class Picture(models.Model):
 
     def __str__(self):
         return self.title
+
+class PictureOnExhibition(models.Model):
+    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа', related_name='picture')
+    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка', related_name='exhibition')
+
+    class Meta:
+        verbose_name = 'Работа на выставке'
+        verbose_name_plural = 'Работы на выставке'
+        constraints = [ models.UniqueConstraint(
+            fields= ['picture', 'exhibition'],
+            name= 'picture_exhibition_unique'
+          )
+        ]
+
+    def __str__(self):
+        return f'{self.picture} / {self.exhibition}'
+
 
 class Article(models.Model):
    title = models.CharField(max_length=500, verbose_name='Название')
@@ -222,5 +240,5 @@ class Article(models.Model):
        return self.title
 
 
-class Event(models.Model):
+class Event(models.Model): # при необходимости можно также добавить и использовать связующую модель
     pass
