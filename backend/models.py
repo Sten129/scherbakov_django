@@ -226,9 +226,9 @@ class Article(models.Model):
    text = models.TextField(verbose_name='Текст')
    author = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, verbose_name='Автор')
    date = models.DateField(verbose_name='Дата', auto_now=datetime.date.today())
-   exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, verbose_name='Выставки')
-   picture = models.ForeignKey(Picture, on_delete=models.CASCADE, blank=True, verbose_name='Работы')
-   image = models.ImageField(verbose_name='Изображение', upload_to='articles/')
+   exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки')
+   picture = models.ForeignKey(Picture, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Работы')
+   image = models.ImageField(verbose_name='Изображение', blank=True, null=True, upload_to='articles/')
    slug = models.SlugField(null=False, unique=True, help_text='URL')
 
    class Meta:

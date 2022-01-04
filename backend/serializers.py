@@ -11,7 +11,8 @@ from .models import (Picture,
                      Technic,
                      Type,
                      Location,
-                     Article)
+                     Article,
+                     PictureOnExhibition)
 
 
 class TypeSerializer(serializers.ModelSerializer):
@@ -102,7 +103,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     # date = serializers.ReadOnlyField
     # location = serializers.SlugRelatedField
     # persons = serializers.SlugRelatedField
-    pdf = serializers.FileField
+    # pdf = serializers.FileField
 
     # image = serializers.ImageField(
     #         required=True,
@@ -113,7 +114,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Document
-        fiels = "__all__"
+        fields = "__all__"
 
     # pass
 
@@ -232,3 +233,9 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     # pass
+
+class PictureOnExhibitionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PictureOnExhibition
+        fields = '__all__'

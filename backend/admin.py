@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Picture, Photo, Letter, Document, Exhibition, Genre, Book, Persone, Owner, Technic, Type, Location
+from .models import Picture, Photo, Letter, Document, Exhibition, Genre, Book, Persone, Owner, Technic, Type, Location, PictureOnExhibition, Article
 
 
 class TypeAdmin(admin.ModelAdmin):
@@ -8,9 +8,12 @@ class TypeAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     # list_filter = ()
 
+class PictureOnExhibitionInline(admin.StackedInline):
+    model = PictureOnExhibition
 
 
 class PictureAdmin(admin.ModelAdmin):
+    inlines = (PictureOnExhibitionInline,)
     list_display = ('title', 'type', 'genre', 'year', 'publishing', 'provenance',)
     empty_value_display = '-пусто-'
     search_fields = ('title', 'type', 'genre')
@@ -89,6 +92,7 @@ class LetterAdmin(admin.ModelAdmin):
     list_filter = ('to',)
 
 
+
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ()
     empty_value_display = '-пусто-'
@@ -100,8 +104,11 @@ class PhotoAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'text', 'author', 'date', 'exhibition', 'picture', 'slug')
     empty_value_display = '-пусто-'
-    search_fields = ()
-    list_filter = ()
+    search_fields = ('title',)
+    list_filter = ('author', )
+
+
+
 
 
 
@@ -117,3 +124,4 @@ admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(Technic, TechnicAdmin)
+admin.site.register(Article, ArticleAdmin)
