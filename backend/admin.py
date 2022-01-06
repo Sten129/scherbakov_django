@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Picture, Photo, Letter, Document, Exhibition, Genre, Book, Persone, Owner, Technic, Type, Location, PictureOnExhibition, Article
+from django.forms import CheckboxSelectMultiple
 
 
 class TypeAdmin(admin.ModelAdmin):
@@ -42,6 +43,7 @@ class ExhibitionAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
     search_fields = ('title', 'location', 'date',)
     list_filter = ('date',)
+
 
 
 

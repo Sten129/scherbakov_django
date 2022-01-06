@@ -44,78 +44,85 @@ from django.http import HttpResponse
 class TypeViewSet(viewsets.ModelViewSet):
     queryset = Type.objects.all()
     serializer_class = TypeSerializer
-    pass
+    pagination_class = PageNumberPagination
+
 
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializers
-    pass
+    pagination_class = PageNumberPagination
 
 
 class TechnicViewSet(viewsets.ModelViewSet):
     queryset = Technic.objects.all()
     serializer_class = TechnicSerializer
-    pass
+    pagination_class = PageNumberPagination
+
 
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     pagination_class = PageNumberPagination
-    pass
+
 
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     pagination_class = PageNumberPagination
-    pass
+
 
 
 class OwnerViewSet(viewsets.ModelViewSet):
     queryset = Owner.objects.all()
     serializer_class = OwnerSerializer
     pagination_class = PageNumberPagination
-    pass
+
 
 
 class PersoneViewSet(viewsets.ModelViewSet):
     queryset = Persone.objects.all()
     serializer_class = PersoneSerializer
     pagination_class = PageNumberPagination
-    pass
+
 
 
 class LetterViewSet(viewsets.ModelViewSet):
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
     pagination_class = PageNumberPagination
-    pass
+
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
-    pass
+    pagination_class = PageNumberPagination
+
 
 
 class ExhibitionViewSet(viewsets.ModelViewSet):
     queryset = Exhibition.objects.all()
     serializer_class = ExhibitionSerializer
-    pass
+    pagination_class = PageNumberPagination
+
 
 
 class PictureViewSet(viewsets.ModelViewSet):
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
-    pass
+    pagination_class = PageNumberPagination
+    class Meta:
+        fields = '__all__'
+
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    pass
+
 
 def contact(request):
     if request.method == 'POST':

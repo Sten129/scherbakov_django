@@ -48,28 +48,6 @@ class TechnicSerializer(serializers.ModelSerializer):
     # pass
 
 
-class PictureSerializer(serializers.ModelSerializer):
-    # title = serializers.ReadOnlyField()
-    # type = serializers.SlugRelatedField
-    # genre = serializers.SlugRelatedField
-    # year = serializers.ReadOnlyField
-    # technic = serializers.SlugRelatedField
-    # size = serializers.ReadOnlyField
-    # publishing = serializers.SlugRelatedField
-    # provenance = serializers.SlugRelatedField
-    # image = serializers.ImageField(
-    #     required=True,
-    #     allow_empty_file=False,
-    #     use_url=True,
-    # )
-
-    class Meta:
-        model = Picture
-        fields = '__all__'
-
-    # pass
-
-
 class PhotoSerializer(serializers.ModelSerializer):
     pass
 
@@ -98,11 +76,11 @@ class LetterSerializer(serializers.ModelSerializer):
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-    # title = serializers.ReadOnlyField
-    # type = serializers.ReadOnlyField
+    title = serializers.ReadOnlyField()
+    type = serializers.ReadOnlyField()
     # date = serializers.ReadOnlyField
-    # location = serializers.SlugRelatedField
-    # persons = serializers.SlugRelatedField
+    location = serializers.SlugRelatedField(queryset=Location.objects.all(), slug_field='name')
+    persons = serializers.SlugRelatedField(queryset=Persone.objects.all(), slug_field='name')
     # pdf = serializers.FileField
 
     # image = serializers.ImageField(
@@ -119,32 +97,9 @@ class DocumentSerializer(serializers.ModelSerializer):
     # pass
 
 
-class ExhibitionSerializer(serializers.ModelSerializer):
-    # title = serializers.ReadOnlyField
-    # location = serializers.SlugRelatedField
-    # date = serializers.ReadOnlyField
-    # pictures = serializers.SlugRelatedField
-    # persons = serializers.SlugRelatedField
-    # publishing = serializers.SlugRelatedField
-    # docs = serializers.SlugRelatedField
-    # description = serializers.ReadOnlyField
-    # image = serializers.ImageField(
-    #     required=True,
-    #     allow_empty_file=False,
-    #     use_url=True,
-    # )
-    # slug = serializers.SlugRelatedField
-
-    class Meta:
-        model = Exhibition
-        fields = '__all__'
-
-    # pass
-
-
 class BookSerializer(serializers.ModelSerializer):
-    # title = serializers.ReadOnlyField
-    # location = serializers.SlugRelatedField
+    title = serializers.ReadOnlyField()
+    location = serializers.SlugRelatedField(queryset=Location.objects.all(), slug_field='name')
     # year = serializers.ReadOnlyField
     # pub_house = serializers.ReadOnlyField
     # isbn = serializers.ReadOnlyField
@@ -165,9 +120,10 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class PersoneSerializer(serializers.ModelSerializer):
-    # name = serializers.ReadOnlyField
-    # birth = serializers.ReadOnlyField
-    # death = serializers.ReadOnlyField
+    name = serializers.ReadOnlyField()
+    birth = serializers.ReadOnlyField()
+    death = serializers.ReadOnlyField()
+    publishing = serializers.SlugRelatedField(queryset=Book.objects.all(), slug_field='title')
     # description = serializers.ReadOnlyField
     # link = serializers.HyperlinkedRelatedField
     # provenance = serializers.SlugRelatedField
@@ -178,9 +134,23 @@ class PersoneSerializer(serializers.ModelSerializer):
     #     use_url=True,
     # )
     # slug = serializers.SlugRelatedField
+    # provenance = serializers.SlugRelatedField(queryset=Picture.objects.all(), slug_field='provenance')
 
     class Meta:
         model = Persone
+        fields = '__all__'
+
+    # pass
+
+
+class ExhibitionSerializer(serializers.ModelSerializer):
+    location = serializers.SlugRelatedField(queryset=Location.objects.all(), slug_field='name')
+    persons = serializers.SlugRelatedField(queryset=Persone.objects.all(),  slug_field='name')
+    publishing = serializers.SlugRelatedField(queryset=Book.objects.all(), slug_field='title')
+    docs = serializers.CharField()
+
+    class Meta:
+        model = Exhibition
         fields = '__all__'
 
     # pass
@@ -218,13 +188,37 @@ class OwnerSerializer(serializers.ModelSerializer):
     # pass
 
 
+class PictureSerializer(serializers.ModelSerializer):
+    title = serializers.ReadOnlyField()
+    type = serializers.SlugRelatedField(queryset=Type.objects.all(), slug_field='name')
+    genre = serializers.SlugRelatedField(queryset=Genre.objects.all(), slug_field='name')
+    technic = serializers.SlugRelatedField(queryset=Technic.objects.all(), slug_field='name')
+    publishing = serializers.SlugRelatedField(queryset=Book.objects.all(), slug_field='title')
+    provenance = serializers.SlugRelatedField(queryset=Owner.objects.all(), slug_field='name')
+    # exhibition = serializers.PrimaryKeyRelatedField(source='exhibition', many=True, read_only=True)
+    exhibition = serializers.SlugRelatedField(queryset=Exhibition.objects.all(), slug_field='title')
+    # year = serializers.ReadOnlyField
+    # size = serializers.ReadOnlyField
+    # image = serializers.ImageField(
+    #     required=True,
+    #     allow_empty_file=False,
+    #     use_url=True,
+    # )
+
+    class Meta:
+        model = Picture
+        fields = '__all__'
+
+    # pass
+
+
 class ArticleSerializer(serializers.ModelSerializer):
-    # title = serializers.ReadOnlyField
-    # text = serializers.ReadOnlyField
-    # author = serializers.SlugRelatedField
-    # date = serializers.ReadOnlyField
-    # exhibition = serializers.SlugRelatedField
-    # picture = serializers.SlugRelatedField
+    title = serializers.ReadOnlyField()
+    text = serializers.ReadOnlyField()
+    author = serializers.SlugRelatedField(queryset=Persone.objects.all(), slug_field='name')
+    date = serializers.ReadOnlyField()
+    exhibition = serializers.SlugRelatedField(queryset=Exhibition.objects.all(), slug_field='title')
+    picture = serializers.SlugRelatedField(queryset=Picture.objects.all(), slug_field='title')
 
     # slug
 

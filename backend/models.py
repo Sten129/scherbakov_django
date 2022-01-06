@@ -166,7 +166,8 @@ class Exhibition(models.Model):
     date = models.DateField(verbose_name='Дата', default=datetime.date.today)
     # pictures = models.ManyToManyField(Picture, through='')
     persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
-    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Издания')
+    publishing = models.ForeignKey(Book, on_delete=models.CASCADE,  blank=True, null=True, verbose_name='Издания')
+    # publishing = models.ManyToManyField(Book, related_name='book')
     docs = models.ForeignKey(Document, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Документы')
     description = models.TextField(max_length=1000, verbose_name='Описание')
     image = models.ImageField(verbose_name='Изображение', upload_to='exhibitions/')
@@ -192,8 +193,8 @@ class Picture(models.Model):
     publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, null=True)
     provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, blank=True, null=True)
     # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
-    # exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки')
-    exhibition = models.ManyToManyField(Exhibition, through='PictureOnExhibition', verbose_name='Выставки')
+    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки', related_name='exhibitions')
+    # exhibition = models.ManyToManyField(Exhibition, through='PictureOnExhibition', blank=True, null=True, verbose_name='Выставки')
     image = models.ImageField(verbose_name='Изображение', upload_to='pictures/')
 
     class Meta:
@@ -203,6 +204,7 @@ class Picture(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class PictureOnExhibition(models.Model):
     picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа', related_name='picture')
@@ -224,7 +226,7 @@ class PictureOnExhibition(models.Model):
 class Article(models.Model):
    title = models.CharField(max_length=500, verbose_name='Название')
    text = models.TextField(verbose_name='Текст')
-   author = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, verbose_name='Автор')
+   author = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, verbose_name='Автор', related_name='persone')
    date = models.DateField(verbose_name='Дата', auto_now=datetime.date.today())
    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки')
    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Работы')
