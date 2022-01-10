@@ -4,6 +4,13 @@ from .models import (
     PictureInTheBook,
     PictureProvenance,
     PictureTechnic,
+    BookOfExhibition,
+    PersoneOnExhibition,
+    PersoneInLetter,
+    PersoneInThePicture,
+    PersoneInTheBook,
+    LocationOfExhibition,
+    DocsOfExhibition,
     Photo,
     Letter,
     Document,
@@ -11,6 +18,7 @@ from .models import (
     Genre,
     Book,
     Persone,
+    PersoneInDocument,
     Owner,
     Technic,
     Type,
@@ -41,12 +49,13 @@ class PictureProvenanceInLine(admin.StackedInline):
 class PictureTechnicInLine(admin.StackedInline):
     model = PictureTechnic
 
-
+class PersoneInThePictureInLine(admin.StackedInline):
+    model = PersoneInThePicture
 
 
 
 class PictureAdmin(admin.ModelAdmin):
-    inlines = (PictureOnExhibitionInline, PictureInTheBookInline, PictureProvenanceInLine, PictureTechnicInLine)
+    inlines = (PictureOnExhibitionInline, PictureInTheBookInline, PictureProvenanceInLine, PictureTechnicInLine, PersoneInThePictureInLine)
     list_display = ('title', 'type', 'genre', 'year', )
     empty_value_display = '-пусто-'
     search_fields = ('title', 'type', 'genre')
@@ -68,10 +77,21 @@ class GenreAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_filter = ('name',)
 
+class BookOfExhibitionInLine(admin.StackedInline):
+    model = BookOfExhibition
 
+class DocsOfExhibitionInLine(admin.StackedInline):
+    model = DocsOfExhibition
+
+class LocationOfExhibitionInLine(admin.StackedInline):
+    model = LocationOfExhibition
+
+class PersoneOnExhhibitonInLine(admin.StackedInline):
+    model = PersoneOnExhibition
 
 class ExhibitionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'location', 'date', 'persons', 'publishing', 'docs', 'description', 'slug')
+    inlines = (BookOfExhibitionInLine, DocsOfExhibitionInLine, LocationOfExhibitionInLine, PersoneOnExhhibitonInLine)
+    list_display = ('title',  'date',  'description', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('title', 'location', 'date',)
     list_filter = ('date',)
@@ -94,9 +114,12 @@ class OwnerAdmin(admin.ModelAdmin):
     list_filter = ('name',)
 
 
+class PersoneInTheBookInLine(admin.StackedInline):
+    model = PersoneInTheBook
 
 class PersoneAdmin(admin.ModelAdmin):
-    list_display = ('name', 'birth', 'death', 'description', 'link', 'publishing', 'slug')
+    inlines = (PersoneInTheBookInLine,)
+    list_display = ('name', 'birth', 'death', 'description', 'link',  'slug')
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
@@ -109,18 +132,23 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ('name', 'year')
     list_filter = ('title', 'year')
 
-
+class PersoneInDocumentInLine(admin.StackedInline):
+    model = PersoneInDocument
 
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ('title', 'type', 'date', 'location', 'persons', 'image', 'slug')
+    inlines = (PersoneInDocumentInLine,)
+    list_display = ('title', 'type', 'date', 'location', 'image', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('title',)
     list_filter = ('title', 'date')
 
+class PersoneInLetterInLine(admin.StackedInline):
+    model = PersoneInLetter
 
 
 class LetterAdmin(admin.ModelAdmin):
-    list_display = ('title', 'from_who', 'to', 'location', 'date', 'persons', 'pdf', 'image', 'slug')
+    inlines = (PersoneInLetterInLine,)
+    list_display = ('title', 'from_who', 'to', 'location', 'date',  'pdf', 'image', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('title', 'from_who', 'to', 'date')
     list_filter = ('to',)
