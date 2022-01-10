@@ -195,8 +195,8 @@ class PictureSerializer(serializers.ModelSerializer):
     technic = serializers.SlugRelatedField(queryset=Technic.objects.all(), slug_field='name')
     publishing = serializers.SlugRelatedField(queryset=Book.objects.all(), slug_field='title')
     provenance = serializers.SlugRelatedField(queryset=Owner.objects.all(), slug_field='name')
-    # exhibition = serializers.PrimaryKeyRelatedField(source='exhibition', many=True, read_only=True)
-    exhibition = serializers.SlugRelatedField(queryset=Exhibition.objects.all(), slug_field='title')
+    # exhibition = ExhibitionSerializer(read_only=True, many=True)
+    exhibition = serializers.SlugRelatedField(queryset=Exhibition.objects.all(),  slug_field='title')
     # year = serializers.ReadOnlyField
     # size = serializers.ReadOnlyField
     # image = serializers.ImageField(

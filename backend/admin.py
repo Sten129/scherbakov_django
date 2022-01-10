@@ -18,7 +18,7 @@ class PictureAdmin(admin.ModelAdmin):
     list_display = ('title', 'type', 'genre', 'year', 'publishing', 'provenance',)
     empty_value_display = '-пусто-'
     search_fields = ('title', 'type', 'genre')
-    list_filter = ('title',)
+    list_filter = ('title', 'exhibition')
 
 
 

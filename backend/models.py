@@ -188,13 +188,13 @@ class Picture(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=False, help_text='Жанр')
     year = models.DateField(verbose_name='Год', default=datetime.date.today)
     technic = models.ForeignKey(Technic, on_delete=models.CASCADE, blank=False)
-    size_vertical = models.IntegerField(verbose_name='Размер по вертикали', blank=False)
-    size_horisontal = models.IntegerField(verbose_name='Размер по горизонтали', blank=False)
+    size_vertical = models.PositiveIntegerField(verbose_name='Размер по вертикали', blank=False)
+    size_horisontal = models.PositiveIntegerField(verbose_name='Размер по горизонтали', blank=False)
     publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, null=True)
     provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, blank=True, null=True)
     # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки', related_name='exhibitions')
-    # exhibition = models.ManyToManyField(Exhibition, through='PictureOnExhibition', blank=True, null=True, verbose_name='Выставки')
+    # exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE,  blank=True, null=True, verbose_name='Выставки', related_name='exhibitions')
+    exhibition = models.ManyToManyField(Exhibition, through='PictureOnExhibition', blank=True, related_name='exhibition', verbose_name='Выставки')
     image = models.ImageField(verbose_name='Изображение', upload_to='pictures/')
 
     class Meta:
@@ -207,8 +207,8 @@ class Picture(models.Model):
 
 
 class PictureOnExhibition(models.Model):
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа', related_name='picture')
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка', related_name='exhibition')
+    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
+    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
 
     class Meta:
         verbose_name = 'Работа на выставке'
