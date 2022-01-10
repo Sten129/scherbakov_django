@@ -38,7 +38,8 @@ class GenreSerializers(serializers.ModelSerializer):
 
 
 class TechnicSerializer(serializers.ModelSerializer):
-    # name = serializers.ReadOnlyField(source='technic.id')
+    # name = serializers.ReadOnlyField()
+    # name = serializers.SlugRelatedField(read_only=True, slug_field='name')
     # slug = serializers.SlugRelatedField(read_only=True, slug_field='slug')
 
     class Meta:
@@ -192,11 +193,14 @@ class PictureSerializer(serializers.ModelSerializer):
     title = serializers.ReadOnlyField()
     type = serializers.SlugRelatedField(queryset=Type.objects.all(), slug_field='name')
     genre = serializers.SlugRelatedField(queryset=Genre.objects.all(), slug_field='name')
-    technic = serializers.SlugRelatedField(queryset=Technic.objects.all(), slug_field='name')
-    publishing = serializers.SlugRelatedField(queryset=Book.objects.all(), slug_field='title')
-    provenance = serializers.SlugRelatedField(queryset=Owner.objects.all(), slug_field='name')
-    # exhibition = ExhibitionSerializer(read_only=True, many=True)
-    exhibition = serializers.SlugRelatedField(queryset=Exhibition.objects.all(),  slug_field='title')
+    technic = TechnicSerializer(read_only=True,many=True)
+    publishing = BookSerializer(read_only=True, many=True)
+    provenance = OwnerSerializer(read_only=True, many=True)
+    exhibition = ExhibitionSerializer(read_only=True, many=True)
+    # technic = serializers.SlugRelatedField(queryset=Technic.objects.all(), many=True, slug_field='name')
+    # publishing = serializers.SlugRelatedField(queryset=Book.objects.all(), slug_field='title')
+    # provenance = serializers.SlugRelatedField(queryset=Owner.objects.all(), slug_field='name')
+    # exhibition = serializers.SlugRelatedField(queryset=Exhibition.objects.all(),  slug_field='location')
     # year = serializers.ReadOnlyField
     # size = serializers.ReadOnlyField
     # image = serializers.ImageField(
@@ -215,10 +219,14 @@ class PictureSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     title = serializers.ReadOnlyField()
     text = serializers.ReadOnlyField()
-    author = serializers.SlugRelatedField(queryset=Persone.objects.all(), slug_field='name')
+    author = PersoneSerializer(read_only=True, many=True)
+    exhibition = ExhibitionSerializer(read_only=True, many=True)
+    picture = PictureSerializer(read_only=True, many=True)
     date = serializers.ReadOnlyField()
-    exhibition = serializers.SlugRelatedField(queryset=Exhibition.objects.all(), slug_field='title')
-    picture = serializers.SlugRelatedField(queryset=Picture.objects.all(), slug_field='title')
+    # picture = serializers.SlugRelatedField(queryset=Picture.objects.all(), slug_field='title')
+    # exhibition = ExhibitionSerializer(read_only=True, many=True)
+    # author = serializers.SlugRelatedField(queryset=Persone.objects.all(), slug_field='name')
+    # exhibition = serializers.SlugRelatedField(queryset=Exhibition.objects.all(), slug_field='title')
 
     # slug
 

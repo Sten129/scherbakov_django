@@ -1,5 +1,25 @@
 from django.contrib import admin
-from .models import Picture, Photo, Letter, Document, Exhibition, Genre, Book, Persone, Owner, Technic, Type, Location, PictureOnExhibition, Article
+from .models import (
+    Picture,
+    PictureInTheBook,
+    PictureProvenance,
+    PictureTechnic,
+    Photo,
+    Letter,
+    Document,
+    Exhibition,
+    Genre,
+    Book,
+    Persone,
+    Owner,
+    Technic,
+    Type,
+    Location,
+    PictureOnExhibition,
+    Article,
+    ArticlePicture,
+    ArticleExhibitions,
+    ArticleAuthor)
 from django.forms import CheckboxSelectMultiple
 
 
@@ -12,13 +32,25 @@ class TypeAdmin(admin.ModelAdmin):
 class PictureOnExhibitionInline(admin.StackedInline):
     model = PictureOnExhibition
 
+class PictureInTheBookInline(admin.StackedInline):
+    model = PictureInTheBook
+
+class PictureProvenanceInLine(admin.StackedInline):
+    model = PictureProvenance
+
+class PictureTechnicInLine(admin.StackedInline):
+    model = PictureTechnic
+
+
+
+
 
 class PictureAdmin(admin.ModelAdmin):
-    inlines = (PictureOnExhibitionInline,)
-    list_display = ('title', 'type', 'genre', 'year', 'publishing', 'provenance',)
+    inlines = (PictureOnExhibitionInline, PictureInTheBookInline, PictureProvenanceInLine, PictureTechnicInLine)
+    list_display = ('title', 'type', 'genre', 'year', )
     empty_value_display = '-пусто-'
     search_fields = ('title', 'type', 'genre')
-    list_filter = ('title', 'exhibition')
+    list_filter = ('title', 'exhibition', 'publishing',)
 
 
 
@@ -102,9 +134,18 @@ class PhotoAdmin(admin.ModelAdmin):
     list_filter = ()
     pass
 
+class ArticleAuthorInLine(admin.StackedInline):
+    model = ArticleAuthor
+
+class ArticlePictureInLine(admin.StackedInline):
+    model = ArticlePicture
+
+class ArticleExhibitionInLine(admin.StackedInline):
+    model = ArticleExhibitions
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'text', 'author', 'date', 'exhibition', 'picture', 'slug')
+    inlines = (ArticleAuthorInLine, ArticleExhibitionInLine, ArticlePictureInLine)
+    list_display = ('title', 'text',  'date', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('title',)
     list_filter = ('author', )
