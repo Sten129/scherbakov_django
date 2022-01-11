@@ -1,6 +1,6 @@
 from django_filters import rest_framework as filters
 
-from .models import Picture, Type
+from .models import Picture, Type, Exhibition, Persone, Book, Letter, Document
 
 
 class PictureFilter(filters.FilterSet):
@@ -27,3 +27,20 @@ class PictureFilter(filters.FilterSet):
             'publishing',
             'provenance'
         ]
+
+class BookFiler(filters.FilterSet):
+    pass
+
+class DocumentFilter(filters.FilterSet):
+    pass
+
+class ExhibitionFilter(filters.FilterSet):
+    pass
+
+class LetterFilter(filters.FilterSet):
+    pass
+
+class PersoneFilter(filters.FilterSet):
+    pass
+
+

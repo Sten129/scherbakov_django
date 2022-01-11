@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django import forms
 from .models import (
     Picture,
     PictureInTheBook,
@@ -28,7 +29,47 @@ from .models import (
     ArticlePicture,
     ArticleExhibitions,
     ArticleAuthor)
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.forms import CheckboxSelectMultiple
+
+
+class ExhibitionAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Exhibition
+        fields = '__all__'
+
+class AritcleAdminForm(forms.ModelForm):
+    text = forms.CharField(label='Текст', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Article
+        fields = '__all__'
+
+class PersoneAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Persone
+        fields = '__all__'
+
+class BookAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Book
+        fields = '__all__'
+
+class DocumentAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Document
+        fields = '__all__'
+
+
+
 
 
 class TypeAdmin(admin.ModelAdmin):
@@ -91,6 +132,7 @@ class PersoneOnExhhibitonInLine(admin.StackedInline):
 
 class ExhibitionAdmin(admin.ModelAdmin):
     inlines = (BookOfExhibitionInLine, DocsOfExhibitionInLine, LocationOfExhibitionInLine, PersoneOnExhhibitonInLine)
+    form = ExhibitionAdminForm
     list_display = ('title',  'date',  'description', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('title', 'location', 'date',)
@@ -119,6 +161,7 @@ class PersoneInTheBookInLine(admin.StackedInline):
 
 class PersoneAdmin(admin.ModelAdmin):
     inlines = (PersoneInTheBookInLine,)
+    form = PersoneAdminForm
     list_display = ('name', 'birth', 'death', 'description', 'link',  'slug')
     empty_value_display = '-пусто-'
     search_fields = ('name',)
@@ -128,6 +171,7 @@ class PersoneAdmin(admin.ModelAdmin):
 
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'location', 'year', 'pub_house', 'isbn', 'pdf', 'description', 'image', 'slug')
+    form = BookAdminForm
     empty_value_display = '-пусто-'
     search_fields = ('name', 'year')
     list_filter = ('title', 'year')
@@ -137,6 +181,7 @@ class PersoneInDocumentInLine(admin.StackedInline):
 
 class DocumentAdmin(admin.ModelAdmin):
     inlines = (PersoneInDocumentInLine,)
+    form = DocumentAdminForm
     list_display = ('title', 'type', 'date', 'location', 'image', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('title',)
@@ -172,6 +217,7 @@ class ArticleExhibitionInLine(admin.StackedInline):
     model = ArticleExhibitions
 
 class ArticleAdmin(admin.ModelAdmin):
+    form = AritcleAdminForm
     inlines = (ArticleAuthorInLine, ArticleExhibitionInLine, ArticlePictureInLine)
     list_display = ('title', 'text',  'date', 'slug')
     empty_value_display = '-пусто-'
