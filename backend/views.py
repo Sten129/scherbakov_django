@@ -1,23 +1,22 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from backend.models import (Picture,
-                    Type,
-                    Event,
-                    Exhibition,
-                    Letter,
-                    Persone,
-                    Location,
-                    Photo,
-                    Document,
-                    Genre,
-                    Technic,
-                    Book,
-                    Owner,
-                    Article)
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.response import Response
-from rest_framework import filters, mixins, status, viewsets
-from rest_framework.decorators import action, api_view, permission_classes
+
+from backend.models import (Picture,
+                            Type,
+                            Exhibition,
+                            Letter,
+                            Persone,
+                            Location,
+                            Document,
+                            Genre,
+                            Technic,
+                            Book,
+                            Owner,
+                            Article)
+from .forms import ContactForm
 from .serializers import (
     TypeSerializer,
     GenreSerializers,
@@ -27,25 +26,17 @@ from .serializers import (
     TechnicSerializer,
     DocumentSerializer,
     PersoneSerializer,
-    PhotoSerializer,
     LocationSerializer,
     OwnerSerializer,
     LetterSerializer,
     ArticleSerializer
 )
 
-from django.core.paginator import Paginator
-from rest_framework.pagination import PageNumberPagination
-from .forms import ContactForm
-from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse
-
 
 class TypeViewSet(viewsets.ModelViewSet):
     queryset = Type.objects.all()
     serializer_class = TypeSerializer
     pagination_class = PageNumberPagination
-
 
 
 class GenreViewSet(viewsets.ModelViewSet):
@@ -60,12 +51,10 @@ class TechnicViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
 
 
-
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
     pagination_class = PageNumberPagination
-
 
 
 class BookViewSet(viewsets.ModelViewSet):
@@ -74,12 +63,10 @@ class BookViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
 
 
-
 class OwnerViewSet(viewsets.ModelViewSet):
     queryset = Owner.objects.all()
     serializer_class = OwnerSerializer
     pagination_class = PageNumberPagination
-
 
 
 class PersoneViewSet(viewsets.ModelViewSet):
@@ -88,12 +75,10 @@ class PersoneViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
 
 
-
 class LetterViewSet(viewsets.ModelViewSet):
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
     pagination_class = PageNumberPagination
-
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
@@ -102,21 +87,19 @@ class DocumentViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
 
 
-
 class ExhibitionViewSet(viewsets.ModelViewSet):
     queryset = Exhibition.objects.all()
     serializer_class = ExhibitionSerializer
     pagination_class = PageNumberPagination
 
 
-
 class PictureViewSet(viewsets.ModelViewSet):
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
     pagination_class = PageNumberPagination
+
     class Meta:
         fields = '__all__'
-
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
