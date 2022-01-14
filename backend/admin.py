@@ -34,7 +34,11 @@ from modeltranslation.admin import TranslationAdmin
 
 
 class ExhibitionAdminForm(forms.ModelForm):
-    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
+    description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
+    description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+
 
     class Meta:
         model = Exhibition
@@ -42,7 +46,10 @@ class ExhibitionAdminForm(forms.ModelForm):
 
 
 class AritcleAdminForm(forms.ModelForm):
-    text = forms.CharField(label='Текст', widget=CKEditorUploadingWidget())
+    text_ru = forms.CharField(label='Текст', widget=CKEditorUploadingWidget())
+    text_en= forms.CharField(label='Text', widget=CKEditorUploadingWidget())
+    text_fr = forms.CharField(label='Text', widget=CKEditorUploadingWidget())
+    text_zh_cn = forms.CharField(label='Text_ch', widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Article
@@ -50,7 +57,10 @@ class AritcleAdminForm(forms.ModelForm):
 
 
 class PersoneAdminForm(forms.ModelForm):
-    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
+    description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
+    description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Persone
@@ -58,8 +68,11 @@ class PersoneAdminForm(forms.ModelForm):
 
 
 class BookAdminForm(forms.ModelForm):
-# class BookAdminForm(TranslationAdmin):
-    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
+    description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
+    description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+
 
     class Meta:
         model = Book
@@ -67,7 +80,10 @@ class BookAdminForm(forms.ModelForm):
 
 
 class DocumentAdminForm(forms.ModelForm):
-    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
+    description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
+    description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Document
