@@ -45,7 +45,7 @@ class ExhibitionAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class AritcleAdminForm(forms.ModelForm):
+class ArticleAdminForm(forms.ModelForm):
     text_ru = forms.CharField(label='Текст', widget=CKEditorUploadingWidget())
     text_en= forms.CharField(label='Text', widget=CKEditorUploadingWidget())
     text_fr = forms.CharField(label='Text', widget=CKEditorUploadingWidget())
@@ -246,7 +246,7 @@ class PhotoAdmin(admin.ModelAdmin):
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    form = AritcleAdminForm
+    form = ArticleAdminForm
     inlines = (ArticleAuthorInLine, ArticleExhibitionInLine, ArticlePictureInLine)
     list_display = ('title', 'text', 'date', 'slug')
     empty_value_display = '-пусто-'

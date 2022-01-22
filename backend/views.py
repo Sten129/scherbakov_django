@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
+from .filters import (BookFilter, ExhibitionFilter, PersoneFilter, PictureFilter, DocumentFilter, LetterFilter)
 
 from backend.models import (Picture,
                             Type,
@@ -33,6 +35,10 @@ from .serializers import (
 )
 
 
+handler500 = 'rest_framework.exceptions.server_error'
+handler400 = 'rest_framework.exceptions.bad_request'
+
+
 class TypeViewSet(viewsets.ModelViewSet):
     queryset = Type.objects.all()
     serializer_class = TypeSerializer
@@ -61,6 +67,8 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = BookFilter
 
 
 class OwnerViewSet(viewsets.ModelViewSet):
@@ -73,33 +81,43 @@ class PersoneViewSet(viewsets.ModelViewSet):
     queryset = Persone.objects.all()
     serializer_class = PersoneSerializer
     pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = PersoneFilter
+
 
 
 class LetterViewSet(viewsets.ModelViewSet):
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
     pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = LetterFilter
 
 
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = DocumentFilter
 
 
 class ExhibitionViewSet(viewsets.ModelViewSet):
     queryset = Exhibition.objects.all()
     serializer_class = ExhibitionSerializer
     pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ExhibitionFilter
 
 
 class PictureViewSet(viewsets.ModelViewSet):
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
     pagination_class = PageNumberPagination
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = PictureFilter
 
-    class Meta:
-        fields = '__all__'
+
 
 
 class ArticleViewSet(viewsets.ModelViewSet):

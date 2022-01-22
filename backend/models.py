@@ -2,8 +2,18 @@ from django.db import models
 from django.contrib.auth import get_user_model
 import datetime
 
+from rest_framework.exceptions import ValidationError
+
 User = get_user_model()
 
+
+def no_future(value):
+    today = datetime.date.today()
+    if value > today:
+        raise ValidationError('Значение не может быть в будущем!')
+
+# def birth_no_death(value):
+#     pass
 
 class Genre(models.Model):
     name = models.CharField('Название жанра', unique=True, max_length=20)
@@ -61,7 +71,7 @@ class Location(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name='место издания')
-    year = models.DateField(verbose_name='Дата', default=datetime.date.today)
+    year = models.DateField(verbose_name='Дата', default=datetime.date.today, validators=[no_future])
     pub_house = models.CharField(max_length=500, verbose_name='издательство')
     isbn = models.CharField(verbose_name='ISBN', max_length=14)
     pdf = models.FileField
@@ -126,7 +136,7 @@ class Letter(models.Model):
     from_who = models.CharField(max_length=500, verbose_name='От кого')
     to = models.CharField(max_length=500, verbose_name='Кому')
     location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Локация')
-    date = models.DateField(verbose_name='Дата', default=datetime.date.today)
+    date = models.DateField(verbose_name='Дата', default=datetime.date.today, validators=[no_future])
     # persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
     persons = models.ManyToManyField(Persone, through='PersoneInLetter', blank=True, verbose_name='Люди')
     pdf = models.FileField(verbose_name='PDF-файл')
@@ -147,7 +157,6 @@ class Document(models.Model):
     type = models.CharField(max_length=100, blank=True, null=True, verbose_name='Тип документа')
     date = models.DateField(verbose_name='Дата', default=datetime.date.today)
     description = models.TextField(max_length=1000, blank=True, verbose_name='Описание')
-    # event = models.ForeignKey
     location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Локация')
     # persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
     persons = models.ManyToManyField(Persone, through='PersoneInDocument', blank=True, verbose_name='Люди')
@@ -405,21 +414,21 @@ class LocationOfExhibition(models.Model):
 
 
 class PersoneOnExhibition(models.Model):
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
     persone = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
+    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
 
     class Meta:
         verbose_name = 'Человек'
         verbose_name_plural = 'Люди'
 
     constraints = [models.UniqueConstraint(
-        fields=['exhibition', 'persone'],
+        fields=['persone', 'exhibition'],
         name='exhibition_persone_unique'
     )
     ]
 
     def __str__(self):
-        return f'{self.exhibition} / {self.persone}'
+        return f'{self.persone} / {self.exhibition}'
 
 
 class DocsOfExhibition(models.Model):
@@ -495,15 +504,15 @@ class PersoneInTheBook(models.Model):
 
 
 class PersoneInThePicture(models.Model):
-    persone = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
     picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
+    persone = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
 
     class Meta:
         verbose_name = 'Человек'
         verbose_name_plural = 'Люди'
 
     constraints = [models.UniqueConstraint(
-        fields=['persone', 'picture'],
+        fields=[ 'picture', 'persone',],
         name='persone_picture_unique'
     )
     ]

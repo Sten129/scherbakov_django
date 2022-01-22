@@ -53,7 +53,7 @@ class PhotoSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    title = serializers.ReadOnlyField()
+    title = serializers.ReadOnlyField(source='get_book_title')
     location = serializers.SlugRelatedField(queryset=Location.objects.all(), slug_field='name')
 
     # year = serializers.ReadOnlyField
@@ -72,13 +72,13 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = '__all__'
 
-    pass
+
 
 
 class PersoneSerializer(serializers.ModelSerializer):
-    name = serializers.ReadOnlyField()
-    birth = serializers.ReadOnlyField()
-    death = serializers.ReadOnlyField()
+    # name = serializers.ReadOnlyField()
+    # birth = serializers.ReadOnlyField()
+    # death = serializers.ReadOnlyField()
     publishing = BookSerializer(read_only=True, many=True)
 
     # publishing = serializers.SlugRelatedField(queryset=Book.objects.all(), slug_field='title')
