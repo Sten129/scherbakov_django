@@ -34,7 +34,6 @@ from .serializers import (
     ArticleSerializer
 )
 
-
 handler500 = 'rest_framework.exceptions.server_error'
 handler400 = 'rest_framework.exceptions.bad_request'
 
@@ -82,8 +81,7 @@ class PersoneViewSet(viewsets.ModelViewSet):
     serializer_class = PersoneSerializer
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
-    filterset_class = PersoneFilter
-
+    # filterset_class = PersoneFilter
 
 
 class LetterViewSet(viewsets.ModelViewSet):
@@ -116,8 +114,6 @@ class PictureViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = PictureFilter
-
-
 
 
 class ArticleViewSet(viewsets.ModelViewSet):

@@ -42,7 +42,6 @@ class BookFilter(filters.FilterSet):
         fields = ['title', 'year', 'pub_house', 'description', 'location', 'isbn']
 
 
-
 class DocumentFilter(filters.FilterSet):
     title = filters.CharFilter(field_name='title', lookup_expr='contains')
     date = filters.DateFromToRangeFilter
@@ -53,8 +52,6 @@ class DocumentFilter(filters.FilterSet):
     class Meta:
         model = Document
         fields = ['title', 'date', 'description', 'location', 'persons']
-
-
 
 
 class ExhibitionFilter(filters.FilterSet):
@@ -70,7 +67,6 @@ class ExhibitionFilter(filters.FilterSet):
         fields = ['title', 'date', 'description', 'location', 'persons', 'publishing']
 
 
-
 class LetterFilter(filters.FilterSet):
     title = filters.CharFilter(field_name='title', lookup_expr='contains')
     from_who = filters.CharFilter(field_name='from_who', lookup_expr='contains')
@@ -83,7 +79,6 @@ class LetterFilter(filters.FilterSet):
         fields = ['title', 'from_who', 'to', 'date', 'persons']
 
 
-
 class PersoneFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
     birth = filters.DateFromToRangeFilter()
@@ -94,4 +89,3 @@ class PersoneFilter(filters.FilterSet):
     class Meta:
         model = Letter
         fields = ['name', 'birth', 'death', 'description', 'publishing']
-

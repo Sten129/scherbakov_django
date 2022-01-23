@@ -39,7 +39,6 @@ class ExhibitionAdminForm(forms.ModelForm):
     description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
     description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
 
-
     class Meta:
         model = Exhibition
         fields = '__all__'
@@ -47,7 +46,7 @@ class ExhibitionAdminForm(forms.ModelForm):
 
 class ArticleAdminForm(forms.ModelForm):
     text_ru = forms.CharField(label='Текст', widget=CKEditorUploadingWidget())
-    text_en= forms.CharField(label='Text', widget=CKEditorUploadingWidget())
+    text_en = forms.CharField(label='Text', widget=CKEditorUploadingWidget())
     text_fr = forms.CharField(label='Text', widget=CKEditorUploadingWidget())
     text_zh_cn = forms.CharField(label='Text_ch', widget=CKEditorUploadingWidget())
 
@@ -72,7 +71,6 @@ class BookAdminForm(forms.ModelForm):
     description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
     description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
     description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
-
 
     class Meta:
         model = Book
@@ -108,6 +106,7 @@ class PersoneInThePictureInLine(admin.StackedInline):
 
 class PictureOnExhibitionInline(admin.StackedInline):
     model = PictureOnExhibition
+
 
 class DocsOfExhibitionInLine(admin.StackedInline):
     model = DocsOfExhibition
@@ -149,7 +148,7 @@ class LocationOfExhibitionInLine(admin.StackedInline):
     model = LocationOfExhibition
 
 
-# class LocationAdmin(admin.ModelAdmin):
+@admin.register(Location)
 class LocationAdmin(TranslationAdmin):
     list_display = ('name', 'slug')
     empty_value_display = '-пусто-'
@@ -157,34 +156,39 @@ class LocationAdmin(TranslationAdmin):
     list_filter = ('name',)
 
 
-# class GenreAdmin(admin.ModelAdmin):
+@admin.register(Genre)
 class GenreAdmin(TranslationAdmin):
     list_display = ('name', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
 
-# class TypeAdmin(admin.ModelAdmin):
+
+@admin.register(Type)
 class TypeAdmin(TranslationAdmin):
     list_display = ('name', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('name',)
-    # list_filter = ()
+    list_filter = ('name',)
 
 
-# class TechnicAdmin(admin.ModelAdmin):
+@admin.register(Technic)
 class TechnicAdmin(TranslationAdmin):
     list_display = ('name', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
 
+
+@admin.register(Owner)
 class OwnerAdmin(admin.ModelAdmin):
     list_display = ('name', 'persone', 'image', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('name',)
     list_filter = ('name',)
 
+
+@admin.register(Picture)
 class PictureAdmin(admin.ModelAdmin):
     inlines = (PictureOnExhibitionInline, PictureInTheBookInline, PictureProvenanceInLine, PictureTechnicInLine,
                PersoneInThePictureInLine)
@@ -194,6 +198,7 @@ class PictureAdmin(admin.ModelAdmin):
     list_filter = ('title', 'exhibition', 'publishing',)
 
 
+@admin.register(Persone)
 class PersoneAdmin(admin.ModelAdmin):
     inlines = (PersoneInTheBookInLine,)
     form = PersoneAdminForm
@@ -203,7 +208,8 @@ class PersoneAdmin(admin.ModelAdmin):
     list_filter = ('name',)
 
 
-class BookAdmin(admin.ModelAdmin):
+@admin.register(Book)
+class BookAdmin(TranslationAdmin):
     list_display = ('title', 'location', 'year', 'pub_house', 'isbn', 'pdf', 'description', 'image', 'slug')
     form = BookAdminForm
     empty_value_display = '-пусто-'
@@ -211,7 +217,8 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('title', 'year')
 
 
-class ExhibitionAdmin(admin.ModelAdmin):
+@admin.register(Exhibition)
+class ExhibitionAdmin(TranslationAdmin):
     inlines = (BookOfExhibitionInLine, DocsOfExhibitionInLine, LocationOfExhibitionInLine, PersoneOnExhhibitonInLine)
     form = ExhibitionAdminForm
     list_display = ('title', 'date', 'description', 'slug')
@@ -220,7 +227,8 @@ class ExhibitionAdmin(admin.ModelAdmin):
     list_filter = ('date',)
 
 
-class DocumentAdmin(admin.ModelAdmin):
+@admin.register(Document)
+class DocumentAdmin(TranslationAdmin):
     inlines = (PersoneInDocumentInLine,)
     form = DocumentAdminForm
     list_display = ('title', 'type', 'date', 'location', 'image', 'slug')
@@ -229,6 +237,7 @@ class DocumentAdmin(admin.ModelAdmin):
     list_filter = ('title', 'date')
 
 
+@admin.register(Letter)
 class LetterAdmin(admin.ModelAdmin):
     inlines = (PersoneInLetterInLine,)
     list_display = ('title', 'from_who', 'to', 'location', 'date', 'pdf', 'image', 'slug')
@@ -245,25 +254,11 @@ class PhotoAdmin(admin.ModelAdmin):
     pass
 
 
-class ArticleAdmin(admin.ModelAdmin):
+@admin.register(Article)
+class ArticleAdmin(TranslationAdmin):
     form = ArticleAdminForm
     inlines = (ArticleAuthorInLine, ArticleExhibitionInLine, ArticlePictureInLine)
     list_display = ('title', 'text', 'date', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('title',)
     list_filter = ('author',)
-
-
-admin.site.register(Type, TypeAdmin)
-admin.site.register(Picture, PictureAdmin)
-admin.site.register(Book, BookAdmin)
-admin.site.register(Owner, OwnerAdmin)
-admin.site.register(Letter, LetterAdmin)
-admin.site.register(Document, DocumentAdmin)
-admin.site.register(Exhibition, ExhibitionAdmin)
-admin.site.register(Persone, PersoneAdmin)
-admin.site.register(Photo, PhotoAdmin)
-admin.site.register(Genre, GenreAdmin)
-admin.site.register(Location, LocationAdmin)
-admin.site.register(Technic, TechnicAdmin)
-admin.site.register(Article, ArticleAdmin)

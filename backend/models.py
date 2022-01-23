@@ -12,6 +12,7 @@ def no_future(value):
     if value > today:
         raise ValidationError('Значение не может быть в будущем!')
 
+
 # def birth_no_death(value):
 #     pass
 
@@ -94,18 +95,15 @@ class Photo(models.Model):
 
 class Persone(models.Model):
     name = models.CharField(max_length=200, verbose_name='имя')
-    birth = models.DateField(verbose_name='Дата рождения', default=datetime.date.today)
-    death = models.DateField(verbose_name='Дата смерти', blank=True, null=True, default=datetime.date.today)
+    birth = models.DateField(verbose_name='Дата рождения', default=datetime.date.today, validators=[no_future])
+    death = models.DateField(
+        verbose_name='Дата смерти', blank=True, null=True, default=datetime.date.today, validators=[no_future]
+    )
     description = models.TextField(max_length=1000, verbose_name='Описание')
     link = models.URLField(blank=True)
     publishing = models.ManyToManyField(Book, through='PersoneInTheBook', blank=True, verbose_name='Публикации')
     image = models.ImageField(verbose_name='Изображение', upload_to='persons/')
     slug = models.SlugField(unique=True, help_text='URL')
-
-    # provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, null=True)
-    # publishing = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
-    # letter = models.ForeignKey(Letter, on_delete=models.CASCADE, null=True, related_name='letter')
-    # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
 
     class Meta:
         ordering = ('-name',)
@@ -155,7 +153,7 @@ class Letter(models.Model):
 class Document(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     type = models.CharField(max_length=100, blank=True, null=True, verbose_name='Тип документа')
-    date = models.DateField(verbose_name='Дата', default=datetime.date.today)
+    date = models.DateField(verbose_name='Дата', default=datetime.date.today, validators=[no_future])
     description = models.TextField(max_length=1000, blank=True, verbose_name='Описание')
     location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Локация')
     # persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
@@ -203,7 +201,7 @@ class Picture(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='type', verbose_name='Тип')
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=False, help_text='Жанр')
-    year = models.DateField(verbose_name='Год', default=datetime.date.today)
+    year = models.DateField(verbose_name='Год', default=datetime.date.today, validators=[no_future])
     technic = models.ManyToManyField(Technic, through='PictureTechnic', blank=False, related_name='technic',
                                      verbose_name='техника')
     size_vertical = models.PositiveIntegerField(verbose_name='Размер по вертикали', blank=False)
@@ -217,12 +215,6 @@ class Picture(models.Model):
     persons = models.ManyToManyField(Persone, through='PersoneInThePicture', blank=True, related_name='persone',
                                      verbose_name='Люди')
     image = models.ImageField(verbose_name='Изображение', upload_to='pictures/')
-
-    # technic = models.ForeignKey(Technic, on_delete=models.CASCADE, blank=False)
-    # publishing = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True, null=True)
-    # provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, blank=True, null=True)
-    # event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name='event')
-    # exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE,  blank=True, null=True, verbose_name='Выставки', related_name='exhibitions')
 
     class Meta:
         ordering = ('-title',)
@@ -304,16 +296,12 @@ class Article(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     text = models.TextField(verbose_name='Текст')
     author = models.ManyToManyField(Persone, through='ArticleAuthor', related_name='author', verbose_name='Автор')
-    date = models.DateField(verbose_name='Дата', auto_now=datetime.date.today())
+    date = models.DateField(verbose_name='Дата', auto_now=datetime.date.today(), validators=[no_future])
     exhibition = models.ManyToManyField(Exhibition, through='ArticleExhibitions', related_name='a_exhibition',
                                         verbose_name='Выставка')
     picture = models.ManyToManyField(Picture, through='ArticlePicture', related_name='a_picture', verbose_name='Работа')
     image = models.ImageField(verbose_name='Изображение', blank=True, null=True, upload_to='articles/')
     slug = models.SlugField(null=False, unique=True, help_text='URL')
-
-    # author = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, verbose_name='Автор', related_name='persone')
-    # exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Выставки')
-    # picture = models.ForeignKey(Picture, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Работы')
 
     class Meta:
         ordering = ('-title',)
@@ -505,21 +493,17 @@ class PersoneInTheBook(models.Model):
 
 class PersoneInThePicture(models.Model):
     picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
-    persone = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
+    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
 
     class Meta:
         verbose_name = 'Человек'
         verbose_name_plural = 'Люди'
 
     constraints = [models.UniqueConstraint(
-        fields=[ 'picture', 'persone',],
+        fields=['picture', 'persone', ],
         name='persone_picture_unique'
     )
     ]
 
     def __str__(self):
-        return f'{self.picture} / {self.persone}'
-
-
-class Event(models.Model):  # при необходимости можно также добавить и использовать связующую модель
-    pass
+        return f'{self.picture} / {self.persons}'
