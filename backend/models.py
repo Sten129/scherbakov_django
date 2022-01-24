@@ -57,7 +57,11 @@ class Technic(models.Model):
 
 class Location(models.Model):
     name = models.CharField('Локация', unique=True, max_length=20)
-    image = models.ImageField(verbose_name='Изображение', blank=True, upload_to='locations/')
+    image = models.ImageField(
+        verbose_name='Изображение',
+        blank=True,
+        upload_to='locations/'
+    )
     slug = models.SlugField(max_length=100, unique=True)
 
     class Meta:
@@ -71,8 +75,16 @@ class Location(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name='место издания')
-    year = models.DateField(verbose_name='Дата', default=datetime.date.today, validators=[no_future])
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        verbose_name='место издания'
+    )
+    year = models.DateField(
+        verbose_name='Дата',
+        default=datetime.date.today,
+        validators=[no_future]
+    )
     pub_house = models.CharField(max_length=500, verbose_name='издательство')
     isbn = models.CharField(verbose_name='ISBN', max_length=14)
     pdf = models.FileField
@@ -95,13 +107,26 @@ class Photo(models.Model):
 
 class Persone(models.Model):
     name = models.CharField(max_length=200, verbose_name='имя')
-    birth = models.DateField(verbose_name='Дата рождения', default=datetime.date.today, validators=[no_future])
+    birth = models.DateField(
+        verbose_name='Дата рождения',
+        default=datetime.date.today,
+        validators=[no_future]
+    )
     death = models.DateField(
-        verbose_name='Дата смерти', blank=True, null=True, default=datetime.date.today, validators=[no_future]
+        verbose_name='Дата смерти',
+        blank=True,
+        null=True,
+        default=datetime.date.today,
+        validators=[no_future]
     )
     description = models.TextField(max_length=1000, verbose_name='Описание')
     link = models.URLField(blank=True)
-    publishing = models.ManyToManyField(Book, through='PersoneInTheBook', blank=True, verbose_name='Публикации')
+    publishing = models.ManyToManyField(
+        Book,
+        through='PersoneInTheBook',
+        blank=True,
+        verbose_name='Публикации'
+    )
     image = models.ImageField(verbose_name='Изображение', upload_to='persons/')
     slug = models.SlugField(unique=True, help_text='URL')
 
@@ -115,9 +140,22 @@ class Persone(models.Model):
 
 
 class Owner(models.Model):
-    name = models.CharField(max_length=500, blank=True, null=True, verbose_name='Название или имя')
-    persone = models.ForeignKey(Persone, blank=True, null=True, on_delete=models.CASCADE)
-    image = models.ImageField(verbose_name='Изображение', upload_to='owners/')
+    name = models.CharField(
+        max_length=500,
+        blank=True,
+        null=True,
+        verbose_name='Название или имя'
+    )
+    persone = models.ForeignKey(
+        Persone,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE
+    )
+    image = models.ImageField(
+        verbose_name='Изображение',
+        upload_to='owners/'
+    )
     slug = models.SlugField(unique=True, help_text='URL')
 
     class Meta:
@@ -133,12 +171,28 @@ class Letter(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     from_who = models.CharField(max_length=500, verbose_name='От кого')
     to = models.CharField(max_length=500, verbose_name='Кому')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Локация')
-    date = models.DateField(verbose_name='Дата', default=datetime.date.today, validators=[no_future])
-    # persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
-    persons = models.ManyToManyField(Persone, through='PersoneInLetter', blank=True, verbose_name='Люди')
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name='Локация')
+    date = models.DateField(
+        verbose_name='Дата',
+        default=datetime.date.today,
+        validators=[no_future]
+    )
+
+    persons = models.ManyToManyField(
+        Persone,
+        through='PersoneInLetter',
+        blank=True,
+        verbose_name='Люди')
     pdf = models.FileField(verbose_name='PDF-файл')
-    image = models.ImageField(verbose_name='Изображение', upload_to='letters/')
+    image = models.ImageField(
+        verbose_name='Изображение',
+        upload_to='letters/'
+    )
     slug = models.SlugField(unique=True, help_text='URL')
 
     class Meta:
@@ -152,12 +206,35 @@ class Letter(models.Model):
 
 class Document(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
-    type = models.CharField(max_length=100, blank=True, null=True, verbose_name='Тип документа')
-    date = models.DateField(verbose_name='Дата', default=datetime.date.today, validators=[no_future])
-    description = models.TextField(max_length=1000, blank=True, verbose_name='Описание')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Локация')
-    # persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
-    persons = models.ManyToManyField(Persone, through='PersoneInDocument', blank=True, verbose_name='Люди')
+    type = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        verbose_name='Тип документа'
+    )
+    date = models.DateField(
+        verbose_name='Дата',
+        default=datetime.date.today,
+        validators=[no_future]
+    )
+    description = models.TextField(
+        max_length=1000,
+        blank=True,
+        verbose_name='Описание'
+    )
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name='Локация'
+    )
+    persons = models.ManyToManyField(
+        Persone,
+        through='PersoneInDocument',
+        blank=True,
+        verbose_name='Люди'
+    )
     image = models.ImageField(verbose_name='Изображение', upload_to='docs/')
     slug = models.SlugField(unique=True, help_text='URL')
 
@@ -172,21 +249,36 @@ class Document(models.Model):
 
 class Exhibition(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
-    location = models.ManyToManyField(Location, through='LocationOfExhibition', verbose_name='Локации')
+    location = models.ManyToManyField(
+        Location,
+        through='LocationOfExhibition', verbose_name='Локации')
     date = models.DateField(verbose_name='Дата', default=datetime.date.today)
-    persons = models.ManyToManyField(Persone, through='PersoneOnExhibition', blank=True, verbose_name='Люди')
-    publishing = models.ManyToManyField(Book, through='BookOfExhibition', blank=True, verbose_name='Книга')
-    docs = models.ManyToManyField(Document, through='DocsOfExhibition', blank=True, verbose_name='Документ')
-    description = models.TextField(max_length=1000, verbose_name='Описание')
-    image = models.ImageField(verbose_name='Изображение', upload_to='exhibitions/')
+    persons = models.ManyToManyField(
+        Persone,
+        through='PersoneOnExhibition',
+        blank=True,
+        verbose_name='Люди'
+    )
+    publishing = models.ManyToManyField(
+        Book,
+        through='BookOfExhibition',
+        blank=True,
+        verbose_name='Книга'
+    )
+    docs = models.ManyToManyField(
+        Document,
+        through='DocsOfExhibition',
+        blank=True,
+        verbose_name='Документ')
+    description = models.TextField(
+        max_length=1000,
+        verbose_name='Описание'
+    )
+    image = models.ImageField(
+        verbose_name='Изображение',
+        upload_to='exhibitions/'
+    )
     slug = models.SlugField(null=False, unique=False, help_text='URL')
-
-    # location = models.ForeignKey(Location, on_delete=models.CASCADE, null=False, verbose_name='Локация')
-    # persons = models.ForeignKey(Persone, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Люди')
-    # publishing = models.ForeignKey(Book, on_delete=models.CASCADE,  blank=True, null=True, verbose_name='Издания')
-    # docs = models.ForeignKey(Document, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Документы')
-    # publishing = models.ManyToManyField(Book, related_name='book')
-    # pictures = models.ManyToManyField(Picture, through='')
 
     class Meta:
         ordering = ('-title',)
@@ -199,22 +291,70 @@ class Exhibition(models.Model):
 
 class Picture(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='type', verbose_name='Тип')
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, blank=False, help_text='Жанр')
-    year = models.DateField(verbose_name='Год', default=datetime.date.today, validators=[no_future])
-    technic = models.ManyToManyField(Technic, through='PictureTechnic', blank=False, related_name='technic',
-                                     verbose_name='техника')
-    size_vertical = models.PositiveIntegerField(verbose_name='Размер по вертикали', blank=False)
-    size_horisontal = models.PositiveIntegerField(verbose_name='Размер по горизонтали', blank=False)
-    publishing = models.ManyToManyField(Book, through='PictureInTheBook', blank=True, related_name='publishing',
-                                        verbose_name='Публикации')
-    provenance = models.ManyToManyField(Owner, through='PictureProvenance', blank=True, related_name='provenance',
-                                        verbose_name='Владельцы')
-    exhibition = models.ManyToManyField(Exhibition, through='PictureOnExhibition', blank=True,
-                                        related_name='exhibition', verbose_name='Выставки')
-    persons = models.ManyToManyField(Persone, through='PersoneInThePicture', blank=True, related_name='persone',
-                                     verbose_name='Люди')
-    image = models.ImageField(verbose_name='Изображение', upload_to='pictures/')
+    type = models.ForeignKey(
+        Type,
+        on_delete=models.CASCADE,
+        related_name='type',
+        verbose_name='Тип'
+    )
+    genre = models.ForeignKey(
+        Genre,
+        on_delete=models.CASCADE,
+        blank=False,
+        help_text='Жанр'
+    )
+    year = models.DateField(
+        verbose_name='Год',
+        default=datetime.date.today,
+        validators=[no_future]
+    )
+    technic = models.ManyToManyField(
+        Technic,
+        through='PictureTechnic',
+        blank=False,
+        related_name='technic',
+        verbose_name='техника'
+    )
+    size_vertical = models.PositiveIntegerField(
+        verbose_name='Размер по вертикали',
+        blank=False
+    )
+    size_horisontal = models.PositiveIntegerField(
+        verbose_name='Размер по горизонтали',
+        blank=False
+    )
+    publishing = models.ManyToManyField(
+        Book,
+        through='PictureInTheBook',
+        blank=True,
+        related_name='publishing',
+        verbose_name='Публикации'
+    )
+    provenance = models.ManyToManyField(
+        Owner,
+        through='PictureProvenance',
+        blank=True,
+        related_name='provenance',
+        verbose_name='Владельцы'
+    )
+    exhibition = models.ManyToManyField(
+        Exhibition,
+        through='PictureOnExhibition',
+        blank=True,
+        related_name='exhibition',
+        verbose_name='Выставки'
+    )
+    persons = models.ManyToManyField(
+        Persone,
+        through='PersoneInThePicture',
+        blank=True,
+        related_name='persone',
+        verbose_name='Люди'
+    )
+    image = models.ImageField(
+        verbose_name='Изображение',
+        upload_to='pictures/'
+    )
 
     class Meta:
         ordering = ('-title',)
@@ -226,8 +366,16 @@ class Picture(models.Model):
 
 
 class PictureOnExhibition(models.Model):
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
+    picture = models.ForeignKey(
+        Picture,
+        on_delete=models.CASCADE,
+        verbose_name='Работа'
+    )
+    exhibition = models.ForeignKey(
+        Exhibition,
+        on_delete=models.CASCADE,
+        verbose_name='Выставка'
+    )
 
     class Meta:
         verbose_name = 'Работа на выставке'
@@ -243,8 +391,16 @@ class PictureOnExhibition(models.Model):
 
 
 class PictureInTheBook(models.Model):
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
-    publishing = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Издание')
+    picture = models.ForeignKey(
+        Picture,
+        on_delete=models.CASCADE,
+        verbose_name='Работа'
+    )
+    publishing = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        verbose_name='Издание'
+    )
 
     class Meta:
         verbose_name = 'Работа опубликована'
@@ -260,8 +416,16 @@ class PictureInTheBook(models.Model):
 
 
 class PictureProvenance(models.Model):
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
-    provenance = models.ForeignKey(Owner, on_delete=models.CASCADE, verbose_name='Провенанс')
+    picture = models.ForeignKey(
+        Picture,
+        on_delete=models.CASCADE,
+        verbose_name='Работа'
+    )
+    provenance = models.ForeignKey(
+        Owner,
+        on_delete=models.CASCADE,
+        verbose_name='Провенанс'
+    )
 
     class Meta:
         verbose_name = 'Владелец работы'
@@ -277,8 +441,16 @@ class PictureProvenance(models.Model):
 
 
 class PictureTechnic(models.Model):
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
-    technic = models.ForeignKey(Technic, on_delete=models.CASCADE, verbose_name='Техника')
+    picture = models.ForeignKey(
+        Picture,
+        on_delete=models.CASCADE,
+        verbose_name='Работа'
+    )
+    technic = models.ForeignKey(
+        Technic,
+        on_delete=models.CASCADE,
+        verbose_name='Техника'
+    )
 
     class Meta:
         verbose_name = 'Техника'
@@ -295,12 +467,35 @@ class PictureTechnic(models.Model):
 class Article(models.Model):
     title = models.CharField(max_length=500, verbose_name='Название')
     text = models.TextField(verbose_name='Текст')
-    author = models.ManyToManyField(Persone, through='ArticleAuthor', related_name='author', verbose_name='Автор')
-    date = models.DateField(verbose_name='Дата', auto_now=datetime.date.today(), validators=[no_future])
-    exhibition = models.ManyToManyField(Exhibition, through='ArticleExhibitions', related_name='a_exhibition',
-                                        verbose_name='Выставка')
-    picture = models.ManyToManyField(Picture, through='ArticlePicture', related_name='a_picture', verbose_name='Работа')
-    image = models.ImageField(verbose_name='Изображение', blank=True, null=True, upload_to='articles/')
+    author = models.ManyToManyField(
+        Persone,
+        through='ArticleAuthor',
+        related_name='author',
+        verbose_name='Автор'
+    )
+    date = models.DateField(
+        verbose_name='Дата',
+        auto_now=datetime.date.today(),
+        validators=[no_future]
+    )
+    exhibition = models.ManyToManyField(
+        Exhibition,
+        through='ArticleExhibitions',
+        related_name='a_exhibition',
+        verbose_name='Выставка'
+    )
+    picture = models.ManyToManyField(
+        Picture,
+        through='ArticlePicture',
+        related_name='a_picture',
+        verbose_name='Работа'
+    )
+    image = models.ImageField(
+        verbose_name='Изображение',
+        blank=True,
+        null=True,
+        upload_to='articles/'
+    )
     slug = models.SlugField(null=False, unique=True, help_text='URL')
 
     class Meta:
@@ -313,8 +508,16 @@ class Article(models.Model):
 
 
 class ArticleAuthor(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='Cтатья')
-    author = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Автор')
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE,
+        verbose_name='Cтатья'
+    )
+    author = models.ForeignKey(
+        Persone,
+        on_delete=models.CASCADE,
+        verbose_name='Автор'
+    )
 
     class Meta:
         verbose_name = 'Автор'
@@ -330,8 +533,16 @@ class ArticleAuthor(models.Model):
 
 
 class ArticleExhibitions(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='Cтатья')
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE,
+        verbose_name='Cтатья'
+    )
+    exhibition = models.ForeignKey(
+        Exhibition,
+        on_delete=models.CASCADE,
+        verbose_name='Выставка'
+    )
 
     class Meta:
         verbose_name = 'Выставка'
@@ -348,8 +559,16 @@ class ArticleExhibitions(models.Model):
 
 
 class ArticlePicture(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='Cтатья')
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE,
+        verbose_name='Cтатья'
+    )
+    picture = models.ForeignKey(
+        Picture,
+        on_delete=models.CASCADE,
+        verbose_name='Работа'
+    )
 
     class Meta:
         verbose_name = 'Работа'
@@ -366,8 +585,16 @@ class ArticlePicture(models.Model):
 
 
 class PersoneInDocument(models.Model):
-    document = models.ForeignKey(Document, on_delete=models.CASCADE, verbose_name='Документ')
-    persone = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+        verbose_name='Документ'
+    )
+    persone = models.ForeignKey(
+        Persone,
+        on_delete=models.CASCADE,
+        verbose_name='Человек'
+    )
 
     class Meta:
         verbose_name = 'Человек'
@@ -384,8 +611,16 @@ class PersoneInDocument(models.Model):
 
 
 class LocationOfExhibition(models.Model):
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name='Локация')
+    exhibition = models.ForeignKey(
+        Exhibition,
+        on_delete=models.CASCADE,
+        verbose_name='Выставка'
+    )
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        verbose_name='Локация'
+    )
 
     class Meta:
         verbose_name = 'Локация'
@@ -402,8 +637,16 @@ class LocationOfExhibition(models.Model):
 
 
 class PersoneOnExhibition(models.Model):
-    persone = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
+    persone = models.ForeignKey(
+        Persone,
+        on_delete=models.CASCADE,
+        verbose_name='Человек'
+    )
+    exhibition = models.ForeignKey(
+        Exhibition,
+        on_delete=models.CASCADE,
+        verbose_name='Выставка'
+    )
 
     class Meta:
         verbose_name = 'Человек'
@@ -420,8 +663,16 @@ class PersoneOnExhibition(models.Model):
 
 
 class DocsOfExhibition(models.Model):
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
-    document = models.ForeignKey(Document, on_delete=models.CASCADE, verbose_name='Документ')
+    exhibition = models.ForeignKey(
+        Exhibition,
+        on_delete=models.CASCADE,
+        verbose_name='Выставка'
+    )
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+        verbose_name='Документ'
+    )
 
     class Meta:
         verbose_name = 'Документ'
@@ -438,8 +689,16 @@ class DocsOfExhibition(models.Model):
 
 
 class BookOfExhibition(models.Model):
-    exhibition = models.ForeignKey(Exhibition, on_delete=models.CASCADE, verbose_name='Выставка')
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Книга')
+    exhibition = models.ForeignKey(
+        Exhibition,
+        on_delete=models.CASCADE,
+        verbose_name='Выставка'
+    )
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        verbose_name='Книга'
+    )
 
     class Meta:
         verbose_name = 'Книга'
@@ -456,8 +715,16 @@ class BookOfExhibition(models.Model):
 
 
 class PersoneInLetter(models.Model):
-    letter = models.ForeignKey(Letter, on_delete=models.CASCADE, verbose_name='Письмо')
-    persone = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
+    letter = models.ForeignKey(
+        Letter,
+        on_delete=models.CASCADE,
+        verbose_name='Письмо'
+    )
+    persone = models.ForeignKey(
+        Persone,
+        on_delete=models.CASCADE,
+        verbose_name='Человек'
+    )
 
     class Meta:
         verbose_name = 'Человек'
@@ -474,8 +741,16 @@ class PersoneInLetter(models.Model):
 
 
 class PersoneInTheBook(models.Model):
-    persone = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Книга')
+    persone = models.ForeignKey(
+        Persone,
+        on_delete=models.CASCADE,
+        verbose_name='Человек'
+    )
+    book = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        verbose_name='Книга'
+    )
 
     class Meta:
         verbose_name = 'Человек'
@@ -492,8 +767,16 @@ class PersoneInTheBook(models.Model):
 
 
 class PersoneInThePicture(models.Model):
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE, verbose_name='Работа')
-    persons = models.ForeignKey(Persone, on_delete=models.CASCADE, verbose_name='Человек')
+    picture = models.ForeignKey(
+        Picture,
+        on_delete=models.CASCADE,
+        verbose_name='Работа'
+    )
+    persons = models.ForeignKey(
+        Persone,
+        on_delete=models.CASCADE,
+        verbose_name='Человек'
+    )
 
     class Meta:
         verbose_name = 'Человек'

@@ -12,7 +12,6 @@ from .models import (
     PersoneInTheBook,
     LocationOfExhibition,
     DocsOfExhibition,
-    Photo,
     Letter,
     Document,
     Exhibition,
@@ -34,10 +33,22 @@ from modeltranslation.admin import TranslationAdmin
 
 
 class ExhibitionAdminForm(forms.ModelForm):
-    description_ru = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
-    description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
-    description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
-    description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(
+        label='Описание',
+        widget=CKEditorUploadingWidget()
+    )
+    description_en = forms.CharField(
+        label='Description',
+        widget=CKEditorUploadingWidget()
+    )
+    description_fr = forms.CharField(
+        label='La description',
+        widget=CKEditorUploadingWidget()
+    )
+    description_zh_cn = forms.CharField(
+        label='Описание',
+        widget=CKEditorUploadingWidget()
+    )
 
     class Meta:
         model = Exhibition
@@ -45,10 +56,22 @@ class ExhibitionAdminForm(forms.ModelForm):
 
 
 class ArticleAdminForm(forms.ModelForm):
-    text_ru = forms.CharField(label='Текст', widget=CKEditorUploadingWidget())
-    text_en = forms.CharField(label='Text', widget=CKEditorUploadingWidget())
-    text_fr = forms.CharField(label='Text', widget=CKEditorUploadingWidget())
-    text_zh_cn = forms.CharField(label='Text_ch', widget=CKEditorUploadingWidget())
+    text_ru = forms.CharField(
+        label='Текст',
+        widget=CKEditorUploadingWidget()
+    )
+    text_en = forms.CharField(
+        label='Text',
+        widget=CKEditorUploadingWidget()
+    )
+    text_fr = forms.CharField(
+        label='Text',
+        widget=CKEditorUploadingWidget()
+    )
+    text_zh_cn = forms.CharField(
+        label='Text_ch',
+        widget=CKEditorUploadingWidget()
+    )
 
     class Meta:
         model = Article
@@ -56,10 +79,22 @@ class ArticleAdminForm(forms.ModelForm):
 
 
 class PersoneAdminForm(forms.ModelForm):
-    description_ru = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
-    description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
-    description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
-    description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(
+        label='Описание',
+        widget=CKEditorUploadingWidget()
+    )
+    description_en = forms.CharField(
+        label='Description',
+        widget=CKEditorUploadingWidget()
+    )
+    description_fr = forms.CharField(
+        label='La description',
+        widget=CKEditorUploadingWidget()
+    )
+    description_zh_cn = forms.CharField(
+        label='Описание',
+        widget=CKEditorUploadingWidget()
+    )
 
     class Meta:
         model = Persone
@@ -67,10 +102,22 @@ class PersoneAdminForm(forms.ModelForm):
 
 
 class BookAdminForm(forms.ModelForm):
-    description_ru = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
-    description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
-    description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
-    description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(
+        label='Описание',
+        widget=CKEditorUploadingWidget()
+    )
+    description_en = forms.CharField(
+        label='Description',
+        widget=CKEditorUploadingWidget()
+    )
+    description_fr = forms.CharField(
+        label='La description',
+        widget=CKEditorUploadingWidget()
+    )
+    description_zh_cn = forms.CharField(
+        label='Описание',
+        widget=CKEditorUploadingWidget()
+    )
 
     class Meta:
         model = Book
@@ -78,10 +125,22 @@ class BookAdminForm(forms.ModelForm):
 
 
 class DocumentAdminForm(forms.ModelForm):
-    description_ru = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
-    description_en = forms.CharField(label='Description', widget=CKEditorUploadingWidget())
-    description_fr = forms.CharField(label='La description', widget=CKEditorUploadingWidget())
-    description_zh_cn = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(
+        label='Описание',
+        widget=CKEditorUploadingWidget()
+    )
+    description_en = forms.CharField(
+        label='Description',
+        widget=CKEditorUploadingWidget()
+    )
+    description_fr = forms.CharField(
+        label='La description',
+        widget=CKEditorUploadingWidget()
+    )
+    description_zh_cn = forms.CharField(
+        label='Описание',
+        widget=CKEditorUploadingWidget()
+    )
 
     class Meta:
         model = Document
@@ -190,8 +249,13 @@ class OwnerAdmin(admin.ModelAdmin):
 
 @admin.register(Picture)
 class PictureAdmin(admin.ModelAdmin):
-    inlines = (PictureOnExhibitionInline, PictureInTheBookInline, PictureProvenanceInLine, PictureTechnicInLine,
-               PersoneInThePictureInLine)
+    inlines = (
+        PictureOnExhibitionInline,
+        PictureInTheBookInline,
+        PictureProvenanceInLine,
+        PictureTechnicInLine,
+        PersoneInThePictureInLine
+    )
     list_display = ('title', 'type', 'genre', 'year',)
     empty_value_display = '-пусто-'
     search_fields = ('title', 'type', 'genre')
@@ -210,7 +274,17 @@ class PersoneAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(TranslationAdmin):
-    list_display = ('title', 'location', 'year', 'pub_house', 'isbn', 'pdf', 'description', 'image', 'slug')
+    list_display = (
+        'title',
+        'location',
+        'year',
+        'pub_house',
+        'isbn',
+        'pdf',
+        'description',
+        'image',
+        'slug'
+    )
     form = BookAdminForm
     empty_value_display = '-пусто-'
     search_fields = ('name', 'year')
@@ -219,7 +293,12 @@ class BookAdmin(TranslationAdmin):
 
 @admin.register(Exhibition)
 class ExhibitionAdmin(TranslationAdmin):
-    inlines = (BookOfExhibitionInLine, DocsOfExhibitionInLine, LocationOfExhibitionInLine, PersoneOnExhhibitonInLine)
+    inlines = (
+        BookOfExhibitionInLine,
+        DocsOfExhibitionInLine,
+        LocationOfExhibitionInLine,
+        PersoneOnExhhibitonInLine
+    )
     form = ExhibitionAdminForm
     list_display = ('title', 'date', 'description', 'slug')
     empty_value_display = '-пусто-'
@@ -240,7 +319,16 @@ class DocumentAdmin(TranslationAdmin):
 @admin.register(Letter)
 class LetterAdmin(admin.ModelAdmin):
     inlines = (PersoneInLetterInLine,)
-    list_display = ('title', 'from_who', 'to', 'location', 'date', 'pdf', 'image', 'slug')
+    list_display = (
+        'title',
+        'from_who',
+        'to',
+        'location',
+        'date',
+        'pdf',
+        'image',
+        'slug'
+    )
     empty_value_display = '-пусто-'
     search_fields = ('title', 'from_who', 'to', 'date')
     list_filter = ('to',)
@@ -257,7 +345,11 @@ class PhotoAdmin(admin.ModelAdmin):
 @admin.register(Article)
 class ArticleAdmin(TranslationAdmin):
     form = ArticleAdminForm
-    inlines = (ArticleAuthorInLine, ArticleExhibitionInLine, ArticlePictureInLine)
+    inlines = (
+        ArticleAuthorInLine,
+        ArticleExhibitionInLine,
+        ArticlePictureInLine
+    )
     list_display = ('title', 'text', 'date', 'slug')
     empty_value_display = '-пусто-'
     search_fields = ('title',)

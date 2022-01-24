@@ -1,5 +1,18 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Type, Technic, Genre, Document, Letter, Exhibition, Picture, Persone, Book, Article, Owner, Location
+from .models import (
+    Type,
+    Technic,
+    Genre,
+    Document,
+    Letter,
+    Exhibition,
+    Picture,
+    Persone,
+    Book,
+    Article,
+    Owner,
+    Location
+)
 
 
 @register(Type)
