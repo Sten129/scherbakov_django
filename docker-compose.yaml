@@ -10,10 +10,11 @@ services:
       - .env
   web:
     image: fulgrim1983/gallery
+#    build: .
     restart: always
     volumes:
-      - static_value:/var/html/static/
-      - media_value:/var/html/media/
+      - static_value:/code/static/
+      - media_value:/code/media/
     depends_on:
       - db
     env_file:
@@ -24,8 +25,8 @@ services:
     - 80:80
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - static_value:/var/html/static/
-      - media_value:/var/html/media/
+      - static_value:/static/
+      - media_value:/media/
 
     depends_on:
       - web
