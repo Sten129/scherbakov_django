@@ -59,8 +59,8 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
-#          key: ${{ secrets.SSH_KEY }}
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.SSH_KEY }}
+#          password: ${{ secrets.PASSWORD }}
 #          passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             sudo docker pull fulgrim1983/gallery:latest
