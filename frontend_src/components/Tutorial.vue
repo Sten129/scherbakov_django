@@ -1,17 +1,15 @@
 <!-- Please remove this file from your project -->
-<template>
-  <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
+<template lang="pug">
+  .relative.flex.items-top.justify-center.min-h-screen.bg-gray-100(class="sm:items-center sm:pt-0")
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-      <h1 class="text-2xl leading-7 font-semibold">{{ $t('wording.language') }}</h1>
-      <nuxt-link
+    .max-w-4xl.mx-auto(class="sm:px-6 lg:px-8")
+      h1.text-2xl.leading-7.font-semibold {{ $t('wording.language') }}
+      nuxt-link(
         class="block"
         v-for="locale in availableLocales"
         :key="locale.code"
-        :to="switchLocalePath(locale.code)">{{ locale.code }}</nuxt-link>
-      <nuxt-link :to="localePath('index')">link to home</nuxt-link>
-    </div>
-  </div>
+        :to="switchLocalePath(locale.code)") {{ locale.code }}
+      nuxt-link(:to="localePath('index')") link to home page
 </template>
 
 <script>
