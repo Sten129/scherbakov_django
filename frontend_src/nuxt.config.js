@@ -41,8 +41,21 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/i18n'
   ],
+
+  i18n: {
+    locales:
+      process.env.AVAILABLE_LOCALES.split(',').map((l) => {
+      return { code: l, file: `${l}.js` }
+    }),
+    defaultLocale: process.env.DEFAULT_LOCALE,
+    langDir: 'i18n/',
+    vueI18n: {
+      fallbackLocale: process.env.DEFAULT_LOCALE
+    }
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -54,5 +67,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extend(config) {
+      config.module.rules.push({
+        test: /\.ya?ml$/,
+        use: 'js-yaml-loader'
+      })
+    }
   }
 }
