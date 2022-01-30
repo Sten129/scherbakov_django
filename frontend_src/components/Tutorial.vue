@@ -1,6 +1,6 @@
 <!-- Please remove this file from your project -->
 <template lang="pug">
-  .relative.flex.items-top.justify-center.min-h-screen.bg-gray-100(class="sm:items-center sm:pt-0")
+  .relative.py-60px.bg-gray-100
     .max-w-4xl.mx-auto(class="sm:px-6 lg:px-8")
       h1.text-2xl.leading-7.font-semibold
         span {{ $t('wording.language') }}

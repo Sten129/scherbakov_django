@@ -67,6 +67,11 @@ export default {
     cssPath: '~/assets/css/tailwind.css'
   },
 
+  loading: {
+    color: 'blue',
+    height: '5px'
+  },
+
   buildDir: process.env.BUILD_DIR,
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
