@@ -1,5 +1,6 @@
 <template lang="pug">
-  Tutorial
+  .container
+    Tutorial
 </template>
 
 <script lang="ts">

@@ -63,6 +63,10 @@ export default {
     baseURL: '/'
   },
 
+  tailwindcss: {
+    cssPath: '~/assets/css/tailwind.css'
+  },
+
   buildDir: process.env.BUILD_DIR,
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -72,6 +76,19 @@ export default {
         test: /\.ya?ml$/,
         use: 'js-yaml-loader'
       })
+    },
+    postcss: {
+      // Add plugin names as key and arguments as value
+      // Install them before as dependencies with npm or yarn
+      plugins: {
+        // Disable a plugin by passing false as value
+        'tailwindcss/nesting': {},
+        'postcss-nested': {
+          bubble: ['screen']
+        },
+        'postcss-hexrgba': {},
+        tailwindcss: {}
+      }
     }
   }
 }

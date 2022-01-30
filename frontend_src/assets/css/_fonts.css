@@ -1,0 +1,39 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;700;900&family=Playfair+Display&display=swap');
+
+.h1 {
+    @apply text-2xl font-bold;
+}
+
+.h2,
+.content h2 {
+    @apply text-lg font-semibold;
+}
+
+.tag {
+    @apply text-xs font-black uppercase;
+}
+
+.readmore {
+  @apply text-sm font-bold underline;
+}
+
+.content p {
+    @apply mb-8;
+}
+
+.content h2 {
+    @apply mb-4;
+}
+
+.content h2:not(:first-child) {
+    @apply mt-12;
+}
+
+.content a {
+    @apply text-primary font-bold underline;
+}
+
+.quote-title {
+    @apply text-2xl font-serif;
+}
