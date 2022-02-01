@@ -1,4 +1,5 @@
 export default {
+  target: "static",
   publicRuntimeConfig: {},
   privateRuntimeConfig: {},
 
