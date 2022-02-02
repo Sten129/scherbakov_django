@@ -51,7 +51,6 @@ INSTALLED_APPS = [
 
 ]
 
-
 # CSRF_TRUSTED_ORIGINS = ['http://*.mydomain.com','http://*.127.0.0.1']
 
 MIDDLEWARE = [
@@ -64,7 +63,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware'
 ]
-
 
 ROOT_URLCONF = 'scherbakov_django.urls'
 
