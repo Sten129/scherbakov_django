@@ -11,7 +11,7 @@ import Vue from 'vue'
 export default Vue.extend({
   name: 'IndexPage',
   async asyncData({ $axios }) {
-    const persons = await $axios.$get('http://31.177.79.202/api/persone/?format=json')
+    const persons = await $axios.$get('http://web:8000/api/persone/?format=json')
     return {
       loaded: true,
       persons,
