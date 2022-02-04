@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django_filters',
     'rest_framework',
-    'psycopg2'
+    'psycopg2',
+    'corsheaders'
 
 ]
 
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -65,6 +67,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'scherbakov_django.urls'
+CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 
