@@ -32,8 +32,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# Application definition
-
 INSTALLED_APPS = [
     'modeltranslation',
     'django.contrib.admin',
@@ -46,11 +44,14 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'django_filters',
+    'rest_framework_simplejwt',
     'rest_framework',
     'psycopg2',
     'corsheaders'
 
 ]
+# Application definition
+
 
 # CSRF_TRUSTED_ORIGINS = ['http://*.mydomain.com','http://*.127.0.0.1']
 
@@ -235,13 +236,12 @@ CKEDITOR_CONFIGS = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework.authentication.TokenAuthentication',
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication'
-    # ],
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',

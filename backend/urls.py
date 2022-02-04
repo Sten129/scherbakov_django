@@ -1,5 +1,5 @@
 from django.urls import path, include
-
+import rest_framework_simplejwt.views
 from rest_framework.routers import DefaultRouter
 from .views import (
     TypeViewSet,
@@ -32,9 +32,14 @@ router.register('picture', PictureViewSet, basename='picture')
 router.register('persone', PersoneViewSet, basename='persone')
 
 urlpatterns = [
-    path('', include(router.urls))
-    # path("", views.index, name="index"),
-    # path("group/<slug:slug>/", views.group_pictures, name="group"),
-    # path('<int:picture_id>/', views.picture_view, name='picture'),
-
+    path('', include(router.urls)),
+    path(
+        'token/', rest_framework_simplejwt.views.TokenObtainPairView.as_view(),
+        name='token_obtain_pair'
+    ),
+    path(
+        'token/refresh',
+        rest_framework_simplejwt.views.TokenRefreshView.as_view(),
+        name='token_refresh'
+    ),
 ]
