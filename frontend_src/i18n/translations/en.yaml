@@ -1,3 +1,14 @@
 wording:
   language: language
   name: name
+menu:
+  home: Home
+  pictures: Pictures
+  exhibitions: Exhibitions
+  books: Books
+  people: People
+  documents: Documents
+  letters: Letters
+  provenance: Provenance
+  articles: Articles
+  biography: Biography

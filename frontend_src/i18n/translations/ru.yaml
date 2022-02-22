@@ -1,3 +1,14 @@
 wording:
   language: язык
   name: имя
+menu:
+  home: Главная
+  pictures: Работы
+  exhibitions: Выставки
+  books: Издания
+  people: Люди
+  documents: Документы
+  letters: Письма
+  provenance: Провенанс
+  articles: Статьи
+  biography: Биография
