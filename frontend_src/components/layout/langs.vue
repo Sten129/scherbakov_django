@@ -1,20 +1,17 @@
-<!-- Please remove this file from your project -->
+
 <template lang="pug">
-  .relative.py-60px.bg-gray-100
+  .relative.inline-block.bg-gray-100
     .max-w-4xl.mx-auto(class="sm:px-6 lg:px-8")
       h1.text-2xl.leading-7.font-semibold
         span {{ $t('wording.language') }}
-      nuxt-link(
-        class="block"
+      nuxt-link.p-2(
         v-for="locale in availableLocales"
         :key="locale.code"
         :to="switchLocalePath(locale.code)") {{ locale.code }}
-      nuxt-link(:to="localePath('index')") link to home page
 </template>
 
 <script>
 export default {
-  name: 'NuxtTutorial',
   computed: {
     availableLocales () {
       return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale)

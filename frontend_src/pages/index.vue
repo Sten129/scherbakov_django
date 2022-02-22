@@ -1,6 +1,5 @@
 <template lang="pug">
   .container
-    Tutorial
     pre(v-show="loaded") {{ $t('wording.name') }}: {{ name }}
     .loading(v-show="!loaded") Loading...
 </template>
@@ -9,7 +8,6 @@
 import Vue from "vue"
 
 export default Vue.extend({
-  name: 'IndexPage',
   async asyncData({ $axios }) {
     const persons = await $axios.$get('/persone/?format=json').then((result) => {
       return result
