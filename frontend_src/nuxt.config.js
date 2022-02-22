@@ -65,6 +65,10 @@ export default () => {
       }),
       defaultLocale: process.env.DEFAULT_LOCALE,
       langDir: 'i18n/',
+      detectBrowserLanguage: {
+        useCookie: true,
+        cookieKey: 'i18n_redirected'
+      },
       vueI18n: {
         fallbackLocale: process.env.DEFAULT_LOCALE
       }

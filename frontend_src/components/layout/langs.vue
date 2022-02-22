@@ -5,7 +5,8 @@
       h1.text-2xl.leading-7.font-semibold
         span {{ $t('wording.language') }}
       nuxt-link.p-2(
-        v-for="locale in availableLocales"
+        :class="(locale.code === $i18n.locale) ? 'text-pink-500' : ''"
+        v-for="locale in $i18n.locales"
         :key="locale.code"
         :to="switchLocalePath(locale.code)") {{ locale.code }}
 </template>
