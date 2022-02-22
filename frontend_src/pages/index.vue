@@ -14,9 +14,7 @@ export default Vue.extend({
     const persons = await $axios.$get('/persone/?format=json').then((result) => {
       return result
     }).catch((error) => {
-      console.log(error.response.data)
-      console.log(error.response.status)
-      console.log(error.response.headers)
+      console.log(error)
     })
     return {
       loaded: true,
