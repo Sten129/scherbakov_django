@@ -1,7 +1,7 @@
 export default {
 
   server: {
-    host: '0' // default: localhost
+    host: '0.0.0.0' // default: localhost
   },
   publicRuntimeConfig: {},
   privateRuntimeConfig: {},
@@ -69,11 +69,6 @@ export default {
 
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css'
-  },
-
-  loading: {
-    color: 'blue',
-    height: '5px'
   },
 
   buildDir: process.env.BUILD_DIR,

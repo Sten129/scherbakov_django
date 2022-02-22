@@ -14,8 +14,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ../scherbakov_django/frontend_src/:/app/result_build/
-    expose:
-      - 3000
+    ports:
+      - 3000:3000
     env_file:
       - .env
   web:
