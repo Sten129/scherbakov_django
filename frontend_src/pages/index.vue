@@ -11,12 +11,18 @@ import Vue from 'vue'
 export default Vue.extend({
   name: 'IndexPage',
   async asyncData({ $axios }) {
-    const persons = await $axios.$get('http://web:8000/api/persone/?format=json')
+    const persons = await $axios.$get('/persone/?format=json').then((result) => {
+      return result
+    }).catch((error) => {
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+    })
     return {
       loaded: true,
       persons,
-      name: persons.results[0].name
-     }
+      name: persons?.results[0].name
+    }
   }
 })
 </script>
