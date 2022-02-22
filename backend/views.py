@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import (
     BookFilter,
@@ -49,35 +48,30 @@ handler400 = 'rest_framework.exceptions.bad_request'
 class TypeViewSet(viewsets.ModelViewSet):
     queryset = Type.objects.all()
     serializer_class = TypeSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
 
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializers
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
 
 
 class TechnicViewSet(viewsets.ModelViewSet):
     queryset = Technic.objects.all()
     serializer_class = TechnicSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
 
 
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
 
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = BookFilter
@@ -86,14 +80,12 @@ class BookViewSet(viewsets.ModelViewSet):
 class OwnerViewSet(viewsets.ModelViewSet):
     queryset = Owner.objects.all()
     serializer_class = OwnerSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
 
 
 class PersoneViewSet(viewsets.ModelViewSet):
     queryset = Persone.objects.all()
     serializer_class = PersoneSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = PersoneFilter
@@ -102,7 +94,6 @@ class PersoneViewSet(viewsets.ModelViewSet):
 class LetterViewSet(viewsets.ModelViewSet):
     queryset = Letter.objects.all()
     serializer_class = LetterSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = LetterFilter
@@ -111,7 +102,6 @@ class LetterViewSet(viewsets.ModelViewSet):
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = DocumentFilter
@@ -120,7 +110,6 @@ class DocumentViewSet(viewsets.ModelViewSet):
 class ExhibitionViewSet(viewsets.ModelViewSet):
     queryset = Exhibition.objects.all()
     serializer_class = ExhibitionSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ExhibitionFilter
@@ -129,7 +118,6 @@ class ExhibitionViewSet(viewsets.ModelViewSet):
 class PictureViewSet(viewsets.ModelViewSet):
     queryset = Picture.objects.all()
     serializer_class = PictureSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = PictureFilter
@@ -138,7 +126,6 @@ class PictureViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = (IsAuthenticated,)
 
 
 def contact(request):
