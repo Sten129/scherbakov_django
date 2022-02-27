@@ -1,5 +1,5 @@
 # build env
-FROM node:16.13.2 as builder
+FROM node:16.13.2-alpine as build
 WORKDIR /app
 COPY package*.json ./
 RUN yarn install

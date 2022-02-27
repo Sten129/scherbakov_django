@@ -9,7 +9,7 @@ import Vue from "vue"
 
 export default Vue.extend({
   async asyncData({ $axios }) {
-    const persons = await $axios.$get('/persone/?format=json').then((result) => {
+    const persons = await $axios.$get('/persons/?format=json').then((result) => {
       return result
     }).catch((error) => {
       console.log(error)

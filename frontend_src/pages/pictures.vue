@@ -8,7 +8,7 @@ import Vue from "vue"
 
 export default Vue.extend({
   async asyncData({ $axios }) {
-    const pictures = await $axios.$get('/picture/?format=json').then((result) => {
+    const pictures = await $axios.$get('/pictures/?format=json').then((result) => {
       return result
     }).catch((error) => {
       console.log(error)
