@@ -50,8 +50,7 @@ jobs:
           push: true
           tags: fulgrim1983/gallery:latest
 
-  build_and_push_to_docker_hub:
-    name: Push Frontend image to Docker Hub
+
      runs-on: ubuntu-latest
      steps:
       - name: Check out the repo
